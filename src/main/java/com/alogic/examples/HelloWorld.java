@@ -6,7 +6,6 @@ import com.logicbus.backend.message.RawMessage;
 
 public class HelloWorld extends Servant {
 
-	
 	public int actionProcess(Context ctx) throws Exception {
 		
 		//获取服务调用消息
@@ -17,8 +16,8 @@ public class HelloWorld extends Servant {
 		
 		//输出Helloworld到缓冲区
 		buf.setLength(0);
-		buf.append("Hello world again and again!!");
+		buf.append("Hello world!!");
+
 		return 0;
 	}
-
 }
