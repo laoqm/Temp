@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<scheduler module="com.alogic.timer.core.Scheduler$XMLed" 
+	lock="${timer.lock}"
+	lock.name="${server.app}-timer">
+    <committer module="com.alogic.timer.core.ThreadPoolTaskCommitter"/>
+    <timer id ="helloworld" >
+        <matcher module="Interval" interval="3000"/>
+        <doer 
+        	module="com.alogic.timer.core.ScriptDoer">
+        	<script>
+				<!--<logger module="com.anysoft.xscript.ScriptLogger$Hub">
+					<logger module="com.anysoft.xscript.ScriptLogger$Default"></logger>
+				</logger>-->
+				<log msg="hello world,This is a timer"/>   	
+        	</script>
+        </doer>
+    </timer>
+</scheduler>

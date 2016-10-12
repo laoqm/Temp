@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="root">
+	<catalog name="examples">
+		<service id="Helloworld" name="Helloworld" note="Helloworld"
+			visible="protected" module="com.alogic.examples.HelloWorld" />
+	</catalog>
+</catalog>
