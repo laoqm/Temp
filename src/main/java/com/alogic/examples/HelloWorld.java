@@ -16,7 +16,7 @@ public class HelloWorld extends Servant {
 		
 		//输出Helloworld到缓冲区
 		buf.setLength(0);
-		buf.append("Hello world again!!");
+		buf.append("Hello world!!");
 		return 0;
 	}
 }
