@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<using xmlTag="include" module="com.alogic.xscript.plugins.Include" />
+	
+    <constants id="keyword" value="lao" />
+	<include
+		src="java:///xscript/service/db/List.xml#App" />
+</script>

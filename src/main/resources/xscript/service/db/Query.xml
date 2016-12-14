@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<!--
+		服务说明：
+		通过省份名字查它的id
+	 -->
+	 <check id="name"  reason="找不到用户名:%s" />
+	 
+	 <using xmlTag="idu" module="com.alogic.together.idu.IDU"/>
+     <idu>
+         <db dbcpId="default">
+              <query tag="data" sql.Query = "
+                    select 
+                        id,
+                        name,
+                        password
+                    from 
+                        users
+                    where 
+                        name = #{bind('name')}
+                "/>
+         </db>
+     </idu>
+	 
+</script>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<!-- 服务说明： 更新组件 必须具备component-manage权限 -->
+	<!-- 使用数据库idu插件 -->
+	<using xmlTag="idu" module="com.alogic.together.idu.IDU" />
+	<using xmlTag="bizlog" module="com.alogic.common.xscript.service.Bizlog" />
+
+    <check id="name" reason="找不到用户名:%s" />
+
+	<idu>
+		<db dbcpId="default">
+			<update
+				sql.Update="
+                    UPDATE 
+                    	users
+                     set 
+                        update_date = now()
+                        #{not_nvl(name,',name=' + bind('name'))}
+                        #{not_nvl(password,',password=' + bind('password'))}
+                    WHERE 
+                    	name = #{bind('name')}
+                " />
+			<!-- 记录审计日志 -->
+			<bizlog type="User" id="${name}" content="将用户信息${name}更新了" />
+
+			<!-- <cache cacheId="components"> <expire id="${componentId}" /> <load 
+				tag="component" id="${componentId}" /> </cache> -->
+		</db>
+	</idu>
+</script>

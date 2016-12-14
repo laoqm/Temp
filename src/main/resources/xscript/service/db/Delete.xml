@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<!-- 服务说明： 删除组件 必须具备component-manage权限 -->
+	<!-- 使用数据库idu插件 -->
+	<using xmlTag="idu" module="com.alogic.together.idu.IDU" />
+	<using xmlTag="bizlog" module="com.alogic.common.xscript.service.Bizlog" />
+
+
+	<!--组件id必须输入 -->
+	<check id="name"  reason="找不到用户名:%s" />
+
+	<idu>
+		<db dbcpId="default">
+			<delete
+				sql.Delete="
+                    DELETE FROM
+                    	users
+                    WHERE 
+                    	name = #{bind('name')}
+                " />
+			<!-- 记录审计日志 -->
+			<bizlog type="User" id="${name}" content="将用户${name}删除了" />
+
+			<!-- 清除用户缓存 -->
+			<!-- <cache cacheId="components"> <expire id="${componentId}" /> </cache> -->
+		</db>
+	</idu>
+</script>

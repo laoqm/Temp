@@ -3,4 +3,10 @@
     <!-- 服务目录配置 -->
     <parameter id="servant.config.master" value="java:///conf/servant.catalog.xml#App" />
     
+    <!-- dbcp配置 -->
+    <parameter id="dbcp.master" value="java:///conf/dbcp/dbcp.source.xml#App"/>	
+    <parameter id="local.db.server" value="jdbc:mariadb://127.0.0.1:3306/demo" final="true"/>
+    <parameter id="local.db.username" value="root" final="true"/>
+    <parameter id="local.db.password" value="x5IWiqchz04=" final="true"/>	
+    
 </settings>

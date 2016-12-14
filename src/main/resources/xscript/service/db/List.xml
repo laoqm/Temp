@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<!-- 服务说明： 查询指定用户的可见组件列表 -->
+
+	<!-- 使用数据库idu插件 -->
+	<using xmlTag="idu" module="com.alogic.together.idu.IDU" />
+	<!-- 使用权限校验插件 -->
+	<!-- <using xmlTag="checkRole" module="com.alogicommon.xscript.service.CheckRole"/> -->
+
+	<!-- 当前登录用户是否有权限进行操作 -->
+	<!-- <checkRole role="component-manage" /> -->
+
+	<idu>
+		<db dbcpId="default">
+		
+			<query extend="true" sql.Query="
+					SELECT 
+                        count(id) as total
+                    FROM 
+                        users
+                    WHERE
+		 				1=1
+	 					#{not_nvl(keyword,' AND (
+	 					     instr(name,' +bind('keyword') +' )> 0 
+	 					     )'
+	 					)}
+				"/>
+		
+			<list tag="data"
+				sql.Query="
+	 				SELECT
+	 					id id,
+						name name,
+						password password,
+						unix_timestamp(create_date)*1000 createDate,
+						unix_timestamp(update_date)*1000 updateDate
+	 				FROM
+	 					users
+	 				WHERE
+	 					1=1
+	 					#{not_nvl(keyword,' AND (
+	 					     instr(name,' +bind('keyword') +' )> 0 
+	 					     )'
+	 					)}
+	 				ORDER BY
+	 					create_date
+	 				DESC
+                        #{not_nvl(offset ,'limit ' + offset + not_nvl(limit,',' + limit))} 
+	 					
+	 			" />
+
+		</db>
+	</idu>
+</script>

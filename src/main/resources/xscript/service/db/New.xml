@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<!-- 服务说明： 新建一个组件 必须具备component-manage权限 -->
+	<!-- 使用数据库idu插件 -->
+	<using xmlTag="idu" module="com.alogic.together.idu.IDU" />
+	<!-- 使用权限校验插件 -->
+	<!-- <using xmlTag="checkRole" module="com.alogic.common.xscript.service.CheckRole"/> -->
+	<using xmlTag="bizlog" module="com.alogic.common.xscript.service.Bizlog" />
+
+	<!-- 当前登录用户是否有权限进行操作 -->
+	<!-- <checkRole role="component-manage" /> -->
+
+	<!-- 用户名称必须输入 -->
+	<check id="name" reason="用户名:%s 不能为空"/>
+    <check id="password" reason="密码:%s 不能为空"/>
+	<!-- 年龄缺省状态为1 -->
+	<!-- <checkAndSet id="age" dft="0" /> -->
+	<!-- 生成唯一ID -->
+	<uuid id="userId" length="30" />
+	<idu>
+		<db dbcpId="default">
+			<new
+				sql.Insert="
+                    INSERT INTO users
+                    	(
+                    		id 
+                    		#{not_nvl(name,',name')} 
+							#{not_nvl(password,',password')} 
+                    		,create_date
+                   			,update_date
+                    	) 
+                    VALUES 
+                    	(
+                    		#{bind('userId')} 
+                    		#{not_nvl(name,',' + bind('name'))} 
+                    		#{not_nvl(password,',' + bind('password'))} 
+                    		,now()
+                    		,now())				
+			" />
+			
+			<!-- 记录审计日志 -->
+			<bizlog type="User" id="${userId}" content="新增用户:${userId}(${name})" />
+
+			<!-- 清除组件缓存 -->
+			<!-- <cache cacheId="components"> <expire id="${componentId}" /> <load 
+				tag="component" id="${componentId}" /> </cache> -->
+		</db>
+	</idu>
+</script>
