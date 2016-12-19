@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	
+	<!-- 使用cassandra插件 -->
+	<using xmlTag="cass-conf" module="com.alogic.xscript.cassandra.CassandraNS" />
+		
+	<cass-conf>
+		<cassandra connection="c1">	
+			<new 
+				cql.Insert="
+	 				INSERT INTO users
+                    	(
+                    		#{not_nvl(name,'username')} 
+							#{not_nvl(password,',password')} 
+                    	) 
+                    VALUES 
+                    	(
+                    		#{not_nvl(name, bind('name'))} 
+                    		#{not_nvl(password,',' + bind('password'))} 
+                    	)			
+	 				    
+	 			" />
+		</cassandra>
+	</cass-conf>
+</script>

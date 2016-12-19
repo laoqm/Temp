@@ -49,7 +49,7 @@
             	<exclude>org.slf4j:*</exclude>
             	
             	<exclude>org.apache.zookeeper:*</exclude>
-            	<exclude>io.netty:netty*</exclude>
+            	<!-- <exclude>io.netty:netty*</exclude> -->
             	<exclude>junit:junit*</exclude>
             	<exclude>jline:jline*</exclude>
             	<exclude>javax.jms:javax.jms-api*</exclude>
@@ -74,7 +74,7 @@
             	<!-- begin -->
             	<exclude>org.apache.hadoop:*</exclude>
             	<exclude>org.apache.httpcomponents:*</exclude>
-            	<exclude>com.google.guava:*</exclude>
+            	<!-- <exclude>com.google.guava:*</exclude> -->
             	<exclude>javax.activation:*</exclude>
             	<exclude>org.apache.avro:*</exclude>
             	<exclude>com.thoughtworks.paranamer:*</exclude>

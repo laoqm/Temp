@@ -9,4 +9,6 @@
     <parameter id="local.db.username" value="root" final="true"/>
     <parameter id="local.db.password" value="x5IWiqchz04=" final="true"/>	
     
+     <!-- cassandra配置 -->
+    <parameter id="cassandra.master" value="java:///conf/cassandra/cassandra.source.xml#App" final="true"/>    
 </settings>

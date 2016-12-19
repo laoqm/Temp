@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	
+	<!-- 使用cassandra插件 -->
+	<using xmlTag="cass-conf" module="com.alogic.xscript.cassandra.CassandraNS" />
+		
+	<cass-conf>
+		<cassandra connection="c1">	
+			<delete 
+				cql.Delete="
+	 				DELETE FROM
+                    	users
+                    WHERE 
+                    	username = #{bind('name')}
+	 				    
+	 			" />
+		</cassandra>
+	</cass-conf>
+</script>

@@ -12,6 +12,11 @@
 		class="com.ketty.service.Agent"
 		name="inner"/>	
 		
+	<!-- 基于together框架的服务 -->
+	<catalog module="com.alogic.together.catalog.TogetherServantCatalog"
+		xrc="/conf/servant-together.xml" 
+		class="App" />
+		
 	<catalog module="com.logicbus.models.servant.impl.XMLResourceServantCatalog" 
 		xrc="/conf/servant.xml"
 		class="App"

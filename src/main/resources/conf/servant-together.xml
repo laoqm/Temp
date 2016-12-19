@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog name="root" home="/xscript/service" bootstrap="App">
+
+	<!-- 插件cassandra start -->
+	<catalog name="cass" home="/xscript/service/cass" bootstrap="App">
+	</catalog>
+	<!-- 插件cassandra end -->
+	<!-- db start-->
+	<catalog name="db" home="/xscript/service/db" bootstrap="App">
+	</catalog>
+	<!-- db end -->
+</catalog>

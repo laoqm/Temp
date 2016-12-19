@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<script>
+	<using xmlTag="include" module="com.alogic.xscript.plugins.Include" />
+	
+    <constants id="name" value="lqm" />
+    <constants id="password" value="8888" />
+	<include
+		src="java:///xscript/service/cass/Update.xml#App" />
+</script>
