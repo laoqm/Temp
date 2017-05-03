@@ -1,6 +1,3 @@
-
-
-
 /*==============================================================*/
 /* Table: ACCESSED_CAPABILITY_INFO                              */
 /*==============================================================*/
@@ -33,7 +30,13 @@ create table USER_ACCT.ACCT
 
 alter table USER_ACCT.ACCT comment '客户拥有的用来支付特定的电信产品服务费用的实体。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CUST_152                                        */
+/*==============================================================*/
+create index I_FKK_CUST_152 on USER_ACCT.ACCT
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_BALANCE                                          */
@@ -59,7 +62,13 @@ create table USER_ACCT.ACCT_BALANCE
 
 alter table USER_ACCT.ACCT_BALANCE comment '对帐户的零头、预付费余额、预存款余额、专项预存费用等的来源、去向、使用记录等进行管理的实体。余额帐本除了表达金额的余额外';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_TYPE_83                                 */
+/*==============================================================*/
+create index I_FKK_BALANCE_TYPE_83 on USER_ACCT.ACCT_BALANCE
+(
+   BALANCE_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_BALANCE_LOG                                      */
@@ -80,7 +89,37 @@ create table USER_ACCT.ACCT_BALANCE_LOG
 
 alter table USER_ACCT.ACCT_BALANCE_LOG comment '余额账本日志';
 
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_PAYOUT_240                              */
+/*==============================================================*/
+create index I_FKK_BALANCE_PAYOUT_240 on USER_ACCT.ACCT_BALANCE_LOG
+(
+   OPER_PAYOUT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_BALANCE_241                                */
+/*==============================================================*/
+create index I_FKK_ACCT_BALANCE_241 on USER_ACCT.ACCT_BALANCE_LOG
+(
+   ACCT_BALANCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_SOURCE_242                              */
+/*==============================================================*/
+create index I_FKK_BALANCE_SOURCE_242 on USER_ACCT.ACCT_BALANCE_LOG
+(
+   OPER_INCOME_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_245                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_245 on USER_ACCT.ACCT_BALANCE_LOG
+(
+   BILLING_CYCLE_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_CREDIT                                           */
@@ -97,7 +136,13 @@ create table USER_ACCT.ACCT_CREDIT
 
 alter table USER_ACCT.ACCT_CREDIT comment '本实体描述了帐户的在付费方面的信用度情况。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_ACCT_106                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_106 on USER_ACCT.ACCT_CREDIT
+(
+   ACCT_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_GROUP                                            */
@@ -135,7 +180,69 @@ create table USER_ACCT.ACCT_ITEM
 
 alter table USER_ACCT.ACCT_ITEM comment '指帐务处理中形成的用户费用数据，用于统计、销帐等处理。';
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_347                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_347 on USER_ACCT.ACCT_ITEM
+(
+   LATN_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_61                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_61 on USER_ACCT.ACCT_ITEM
+(
+   ACCT_ITEM_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILL_63                                         */
+/*==============================================================*/
+create index I_FKK_BILL_63 on USER_ACCT.ACCT_ITEM
+(
+   BILL_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_SOURCE_67                             */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_SOURCE_67 on USER_ACCT.ACCT_ITEM
+(
+   ITEM_SOURCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_72                                */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_72 on USER_ACCT.ACCT_ITEM
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_154                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_154 on USER_ACCT.ACCT_ITEM
+(
+   ACCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_155                                        */
+/*==============================================================*/
+create index I_FKK_SERV_155 on USER_ACCT.ACCT_ITEM
+(
+   SERV_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_METHOD_206                              */
+/*==============================================================*/
+create index I_FKK_PAYMENT_METHOD_206 on USER_ACCT.ACCT_ITEM
+(
+   PAYMENT_METHOD
+);
 
 /*==============================================================*/
 /* Table: ACCT_ITEM_ADJUSTED                                    */
@@ -151,7 +258,21 @@ create table USER_ACCT.ACCT_ITEM_ADJUSTED
 
 alter table USER_ACCT.ACCT_ITEM_ADJUSTED comment '记录调帐产生的帐目数据。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_134                                   */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_134 on USER_ACCT.ACCT_ITEM_ADJUSTED
+(
+   ADJUST_ACCT_ITEM_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_135                                   */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_135 on USER_ACCT.ACCT_ITEM_ADJUSTED
+(
+   ACCT_ITEM_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_ITEM_CLASS                                       */
@@ -197,7 +318,29 @@ create table USER_ACCT.ACCT_ITEM_GROUP_MEMBER
 
 alter table USER_ACCT.ACCT_ITEM_GROUP_MEMBER comment '定义每个帐目组包含哪些帐目。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_GROUP_58                              */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_GROUP_58 on USER_ACCT.ACCT_ITEM_GROUP_MEMBER
+(
+   ACCT_ITEM_GROUP_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_65                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_65 on USER_ACCT.ACCT_ITEM_GROUP_MEMBER
+(
+   ACCT_ITEM_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_SOURCE_66                             */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_SOURCE_66 on USER_ACCT.ACCT_ITEM_GROUP_MEMBER
+(
+   ITEM_SOURCE_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_ITEM_SOURCE                                      */
@@ -214,6 +357,13 @@ create table USER_ACCT.ACCT_ITEM_SOURCE
 
 alter table USER_ACCT.ACCT_ITEM_SOURCE comment '记录帐目的具体来源。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_70                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_70 on USER_ACCT.ACCT_ITEM_SOURCE
+(
+   ACCT_ITEM_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_ITEM_TYPE                                        */
@@ -232,6 +382,21 @@ create table USER_ACCT.ACCT_ITEM_TYPE
 
 alter table USER_ACCT.ACCT_ITEM_TYPE comment '定义帐目的类型。是对计费系统定义的费用的描述，如市话次数费、租费等，而这些帐目有一定的归属关系，如长途基本费和长途附加费';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_CLASS_64                              */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_CLASS_64 on USER_ACCT.ACCT_ITEM_TYPE
+(
+   ACCT_ITEM_CLASS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EMULATORY_PARTNER_199                           */
+/*==============================================================*/
+create index I_FKK_EMULATORY_PARTNER_199 on USER_ACCT.ACCT_ITEM_TYPE
+(
+   PARTY_ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: ACCT_RELATIONSHIP                                     */
@@ -245,6 +410,22 @@ create table USER_ACCT.ACCT_RELATIONSHIP
 );
 
 alter table USER_ACCT.ACCT_RELATIONSHIP comment '表达帐户与帐户之间的关系。';
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_141                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_141 on USER_ACCT.ACCT_RELATIONSHIP
+(
+   ACCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_142                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_142 on USER_ACCT.ACCT_RELATIONSHIP
+(
+   REL_ACCT_ID
+);
 
 /*==============================================================*/
 /* Table: ACC_NBR_TYPE                                          */
@@ -282,7 +463,13 @@ create table USER_PRODUCT.ACTION
 
 alter table USER_PRODUCT.ACTION comment '描述提供服务具体对应的动作，如装拆移改等';
 
-
+/*==============================================================*/
+/* Index: I_FKK_ACTION_TYPE_201                                 */
+/*==============================================================*/
+create index I_FKK_ACTION_TYPE_201 on USER_PRODUCT.ACTION
+(
+   ACTION_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: ACTION_TYPE                                           */
@@ -327,6 +514,21 @@ create table USER_PRICING.AGGREGATE_OBJECT
 
 alter table USER_PRICING.AGGREGATE_OBJECT comment '是一种特殊类型的定价参考对象，这类对象的值是通过由其他对象的值累加（减）得来的。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_25                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_25 on USER_PRICING.AGGREGATE_OBJECT
+(
+   BELONG_CALC_OBJECT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_26                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_26 on USER_PRICING.AGGREGATE_OBJECT
+(
+   SUB_CALC_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: AGREEMENT                                             */
@@ -347,6 +549,14 @@ create table PARTY_USER.AGREEMENT
 alter table PARTY_USER.AGREEMENT comment '客户与电信运营商签订的具有法律效力的约定，它包含了关于订购、使用电信相关产品，以及与费用支付相关的条款。主要有代销协议、';
 
 /*==============================================================*/
+/* Index: I_FKK_CUST_151                                        */
+/*==============================================================*/
+create index I_FKK_CUST_151 on PARTY_USER.AGREEMENT
+(
+   CUST_ID
+);
+
+/*==============================================================*/
 /* Table: AGREEMENT_ATTR                                        */
 /*==============================================================*/
 create table PARTY_USER.AGREEMENT_ATTR
@@ -363,6 +573,15 @@ create table PARTY_USER.AGREEMENT_ATTR
 alter table PARTY_USER.AGREEMENT_ATTR comment '描述了客户协议相关的属性。';
 
 /*==============================================================*/
+/* Index: I_FKK_AGREEMENT_OBJECT_224                            */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_OBJECT_224 on PARTY_USER.AGREEMENT_ATTR
+(
+   AGREEMENT_ID,
+   OBJECT_ID
+);
+
+/*==============================================================*/
 /* Table: AGREEMENT_OBJECT                                      */
 /*==============================================================*/
 create table PARTY_USER.AGREEMENT_OBJECT
@@ -377,6 +596,22 @@ create table PARTY_USER.AGREEMENT_OBJECT
 
 alter table PARTY_USER.AGREEMENT_OBJECT comment '描述了客户协议涉及的对象。';
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_222                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_222 on PARTY_USER.AGREEMENT_OBJECT
+(
+   AGR_AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_OBJECT_223                            */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_OBJECT_223 on PARTY_USER.AGREEMENT_OBJECT
+(
+   AGR_AGREEMENT_ID,
+   PARENT_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: APPORTION_RESULT                                      */
@@ -394,6 +629,14 @@ create table USER_ACCT.APPORTION_RESULT
 );
 
 alter table USER_ACCT.APPORTION_RESULT comment '定义对分摊对象进行分摊分成以后的结果明细。';
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_239                                        */
+/*==============================================================*/
+create index I_FKK_SERV_239 on USER_ACCT.APPORTION_RESULT
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: ATOM_TREE2                                            */
@@ -426,6 +669,13 @@ create table USER_STAT.ATOM_TREE_STRUCT2
 
 alter table USER_STAT.ATOM_TREE_STRUCT2 comment '定义原子树的树状结构';
 
+/*==============================================================*/
+/* Index: I_FKK_ATOM_TREE_349                                   */
+/*==============================================================*/
+create index I_FKK_ATOM_TREE_349 on USER_STAT.ATOM_TREE_STRUCT2
+(
+   TREE_ID
+);
 
 /*==============================================================*/
 /* Table: ATOM_TREE_STRUCT_ITEM2                                */
@@ -442,6 +692,13 @@ create table USER_STAT.ATOM_TREE_STRUCT_ITEM2
 
 alter table USER_STAT.ATOM_TREE_STRUCT_ITEM2 comment '定义原子树叶子节点与关键ID取值的对应关系';
 
+/*==============================================================*/
+/* Index: I_FKK_ATOM_TREE_STRUCT_361                            */
+/*==============================================================*/
+create index I_FKK_ATOM_TREE_STRUCT_361 on USER_STAT.ATOM_TREE_STRUCT_ITEM2
+(
+   TREE_NODE_ID
+);
 
 /*==============================================================*/
 /* Table: ATTR_VALUE_TYPE                                       */
@@ -483,6 +740,21 @@ create table USER_ACCT.BALANCE_ACCT_ITEM_PAYED
 
 alter table USER_ACCT.BALANCE_ACCT_ITEM_PAYED comment '如果是扣款销帐，记录扣款时使用余额的详细帐目。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_221                                   */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_221 on USER_ACCT.BALANCE_ACCT_ITEM_PAYED
+(
+   ACCT_ITEM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_PAYOUT_226                              */
+/*==============================================================*/
+create index I_FKK_BALANCE_PAYOUT_226 on USER_ACCT.BALANCE_ACCT_ITEM_PAYED
+(
+   OPER_PAYOUT_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_PAYOUT                                        */
@@ -506,6 +778,38 @@ create table USER_ACCT.BALANCE_PAYOUT
 );
 
 alter table USER_ACCT.BALANCE_PAYOUT comment '记录余额帐本的每一次支出操作信息。';
+
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_RELATION_247                            */
+/*==============================================================*/
+create index I_FKK_BALANCE_RELATION_247 on USER_ACCT.BALANCE_PAYOUT
+(
+   BALANCE_RELATION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_BALANCE_218                                */
+/*==============================================================*/
+create index I_FKK_ACCT_BALANCE_218 on USER_ACCT.BALANCE_PAYOUT
+(
+   ACCT_BALANCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_219                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_219 on USER_ACCT.BALANCE_PAYOUT
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILL_220                                        */
+/*==============================================================*/
+create index I_FKK_BILL_220 on USER_ACCT.BALANCE_PAYOUT
+(
+   BILL_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_PRESENT_RULE                                  */
@@ -537,8 +841,21 @@ alter table USER_ACCT.BALANCE_PRESENT_RULE comment '定义余额预存的赠送�
 
 赠送的金额 ＝ BASE_VALUE + (交纳金额 CALC_MET';
 
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_TYPE_295                                */
+/*==============================================================*/
+create index I_FKK_BALANCE_TYPE_295 on USER_ACCT.BALANCE_PRESENT_RULE
+(
+   PAY_BALANCE_TYPE_ID
+);
 
-
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_TYPE_296                                */
+/*==============================================================*/
+create index I_FKK_BALANCE_TYPE_296 on USER_ACCT.BALANCE_PRESENT_RULE
+(
+   PRESENT_BALANCE_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_RELATION                                      */
@@ -554,6 +871,13 @@ create table USER_ACCT.BALANCE_RELATION
 
 alter table USER_ACCT.BALANCE_RELATION comment '记录余额对象之间的关系。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_BALANCE_84                                 */
+/*==============================================================*/
+create index I_FKK_ACCT_BALANCE_84 on USER_ACCT.BALANCE_RELATION
+(
+   ACCT_BALANCE_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_RESERVE_DETAIL                                */
@@ -598,7 +922,21 @@ create table USER_ACCT.BALANCE_SHARE_RULE
 
 alter table USER_ACCT.BALANCE_SHARE_RULE comment '余额共享规则';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_BALANCE_243                                */
+/*==============================================================*/
+create index I_FKK_ACCT_BALANCE_243 on USER_ACCT.BALANCE_SHARE_RULE
+(
+   ACCT_BALANCE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_SHARE_RULE_TYPE_244                             */
+/*==============================================================*/
+create index I_FKK_SHARE_RULE_TYPE_244 on USER_ACCT.BALANCE_SHARE_RULE
+(
+   SHARE_RULE_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_SOURCE                                        */
@@ -625,7 +963,29 @@ create table USER_ACCT.BALANCE_SOURCE
 
 alter table USER_ACCT.BALANCE_SOURCE comment '记录余额帐本的每一笔收入来源.';
 
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_RELATION_246                            */
+/*==============================================================*/
+create index I_FKK_BALANCE_RELATION_246 on USER_ACCT.BALANCE_SOURCE
+(
+   BALANCE_RELATION_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BALANCE_SOURCE_TYPE_248                         */
+/*==============================================================*/
+create index I_FKK_BALANCE_SOURCE_TYPE_248 on USER_ACCT.BALANCE_SOURCE
+(
+   BALANCE_SOURCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_BALANCE_217                                */
+/*==============================================================*/
+create index I_FKK_ACCT_BALANCE_217 on USER_ACCT.BALANCE_SOURCE
+(
+   ACCT_BALANCE_ID
+);
 
 /*==============================================================*/
 /* Table: BALANCE_SOURCE_TYPE                                   */
@@ -661,9 +1021,24 @@ alter table USER_ACCT.BALANCE_TYPE comment '对余额类型进行具体定义，
 
 
 /*==============================================================*/
+/* Index: I_FKK_SPECIAL_PAYMENT_DESC_79                         */
+/*==============================================================*/
+create index I_FKK_SPECIAL_PAYMENT_DESC_79 on USER_ACCT.BALANCE_TYPE
+(
+   SPE_PAYMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_MEASURE_METHOD_294                              */
+/*==============================================================*/
+create index I_FKK_MEASURE_METHOD_294 on USER_ACCT.BALANCE_TYPE
+(
+   MEASURE_METHOD_ID
+);
+
+/*==============================================================*/
 /* Table: BALANCE_TYPE_PARAM                                    */
 /*==============================================================*/
-
 create table USER_PRICING.BALANCE_TYPE_PARAM
 (
    BALANCE_TYPE_PARAM_ID numeric(9,0) not null comment '余额类型参数标识',
@@ -694,7 +1069,13 @@ create table USER_PRODUCT.BAND
 
 alter table USER_PRODUCT.BAND comment '销售品的品牌，如互联星空';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BAND_267                                        */
+/*==============================================================*/
+create index I_FKK_BAND_267 on USER_PRODUCT.BAND
+(
+   BAN_BAND_ID
+);
 
 /*==============================================================*/
 /* Table: BANK                                                  */
@@ -723,7 +1104,13 @@ create table USER_ACCT.BANK_BRANCH
 
 alter table USER_ACCT.BANK_BRANCH comment '定义系统涉及的银行分行。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BANK_140                                        */
+/*==============================================================*/
+create index I_FKK_BANK_140 on USER_ACCT.BANK_BRANCH
+(
+   BANK_ID
+);
 
 /*==============================================================*/
 /* Table: BILL                                                  */
@@ -756,6 +1143,54 @@ create table USER_ACCT.BILL
 alter table USER_ACCT.BILL comment '记录用户缴费后生成的帐务单据的相关信息。';
 
 /*==============================================================*/
+/* Index: I_FKK_PAYMENT_62                                      */
+/*==============================================================*/
+create index I_FKK_PAYMENT_62 on USER_ACCT.BILL
+(
+   PAYMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_73                                */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_73 on USER_ACCT.BILL
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_METHOD_121                              */
+/*==============================================================*/
+create index I_FKK_PAYMENT_METHOD_121 on USER_ACCT.BILL
+(
+   PAYMENT_METHOD
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_148                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_148 on USER_ACCT.BILL
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_149                                        */
+/*==============================================================*/
+create index I_FKK_SERV_149 on USER_ACCT.BILL
+(
+   SERV_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_150                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_150 on USER_ACCT.BILL
+(
+   ACCT_ID
+);
+
+/*==============================================================*/
 /* Table: BILLING_CYCLE                                         */
 /*==============================================================*/
 create table USER_ACCT.BILLING_CYCLE
@@ -774,6 +1209,21 @@ create table USER_ACCT.BILLING_CYCLE
 
 alter table USER_ACCT.BILLING_CYCLE comment '定义具体的帐务周期及相关重要日期，供系统或用户选择以指定帐务周期。';
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_TYPE_115                          */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_TYPE_115 on USER_ACCT.BILLING_CYCLE
+(
+   BILLING_CYCLE_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_143                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_143 on USER_ACCT.BILLING_CYCLE
+(
+   LAST_BILLING_CYCLE_ID
+);
 
 /*==============================================================*/
 /* Table: BILLING_CYCLE_TYPE                                    */
@@ -804,7 +1254,21 @@ create table USER_LOCATION.BILLING_REGION
 
 alter table USER_LOCATION.BILLING_REGION comment '计费区域是指根据计费管理需要划分的一种电信管理区域。可以包括本地网、营业区、局向等，可根据需要定义新的类型，在本实体中由';
 
+/*==============================================================*/
+/* Index: I_FKK_REGION_335                                      */
+/*==============================================================*/
+create index I_FKK_REGION_335 on USER_LOCATION.BILLING_REGION
+(
+   REGION_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_105                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_105 on USER_LOCATION.BILLING_REGION
+(
+   PARENT_REGION_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_ACCT_ITEM                                        */
@@ -819,7 +1283,29 @@ create table USER_ACCT.BILL_ACCT_ITEM
 
 alter table USER_ACCT.BILL_ACCT_ITEM comment '帐单项_帐目实体用于描述一个帐单项由哪些帐目组成。';
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_ITEM_59                                    */
+/*==============================================================*/
+create index I_FKK_BILL_ITEM_59 on USER_ACCT.BILL_ACCT_ITEM
+(
+   BILL_ITEM_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_68                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_68 on USER_ACCT.BILL_ACCT_ITEM
+(
+   ACCT_ITEM_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_SOURCE_69                             */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_SOURCE_69 on USER_ACCT.BILL_ACCT_ITEM
+(
+   ITEM_SOURCE_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_FORMAT                                           */
@@ -834,6 +1320,13 @@ create table USER_ACCT.BILL_FORMAT
 
 alter table USER_ACCT.BILL_FORMAT comment '由电信统一定制或根据客户要求定制的帐单的具体格式。包括广告、备注等。';
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_REMARK_123                                 */
+/*==============================================================*/
+create index I_FKK_BILL_REMARK_123 on USER_ACCT.BILL_FORMAT
+(
+   BILL_REMARK_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_FORMAT_CUSTOMIZE                                 */
@@ -854,6 +1347,21 @@ create table USER_ACCT.BILL_FORMAT_CUSTOMIZE
 alter table USER_ACCT.BILL_FORMAT_CUSTOMIZE comment '记录用户的帐单、发票定制信息
 ';
 
+/*==============================================================*/
+/* Index: I_FKK_ADDRESS_289                                     */
+/*==============================================================*/
+create index I_FKK_ADDRESS_289 on USER_ACCT.BILL_FORMAT_CUSTOMIZE
+(
+   ADDRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_292                                 */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_292 on USER_ACCT.BILL_FORMAT_CUSTOMIZE
+(
+   BILL_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_FORMAT_ITEM                                      */
@@ -868,7 +1376,21 @@ create table USER_ACCT.BILL_FORMAT_ITEM
 
 alter table USER_ACCT.BILL_FORMAT_ITEM comment '描述一个帐单格式由哪些帐单项组成。';
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_ITEM_60                                    */
+/*==============================================================*/
+create index I_FKK_BILL_ITEM_60 on USER_ACCT.BILL_FORMAT_ITEM
+(
+   BILL_ITEM_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_132                                 */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_132 on USER_ACCT.BILL_FORMAT_ITEM
+(
+   BILL_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_FORMAT_SELECTOR                                  */
@@ -883,6 +1405,21 @@ create table USER_ACCT.BILL_FORMAT_SELECTOR
 
 alter table USER_ACCT.BILL_FORMAT_SELECTOR comment '定义帐单定制的条件选择，选择的条件类型可以有区域、付费方式、操作类型、主产品实例等。鉴于选择规则实现的不同，此处对条件选';
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_CUSTOMI_291                         */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_CUSTOMI_291 on USER_ACCT.BILL_FORMAT_SELECTOR
+(
+   BILL_FORMAT_CUSTOMIZE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_293                                 */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_293 on USER_ACCT.BILL_FORMAT_SELECTOR
+(
+   BILL_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_ITEM                                             */
@@ -900,7 +1437,29 @@ create table USER_ACCT.BILL_ITEM
 
 alter table USER_ACCT.BILL_ITEM comment '帐目按一定的规则组织起来形成帐单项，体现为帐单上的条目。分非费用帐单项和费用帐单项。帐单项分层次，即帐单项也可以由帐单项';
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_ITEM_55                                    */
+/*==============================================================*/
+create index I_FKK_BILL_ITEM_55 on USER_ACCT.BILL_ITEM
+(
+   BILL_PARENT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BILL_REMARK_125                                 */
+/*==============================================================*/
+create index I_FKK_BILL_REMARK_125 on USER_ACCT.BILL_ITEM
+(
+   BILL_REMARK_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_285                               */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_285 on USER_ACCT.BILL_ITEM
+(
+   PRODUCT_OFFER_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_RECORD                                           */
@@ -920,7 +1479,13 @@ create table USER_ACCT.BILL_RECORD
 
 alter table USER_ACCT.BILL_RECORD comment '记录每张帐单的关键信息。包括金额、投递时间等。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_CUSTOMI_290                         */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_CUSTOMI_290 on USER_ACCT.BILL_RECORD
+(
+   BILL_FORMAT_CUSTOMIZE_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_REMARK                                           */
@@ -937,7 +1502,13 @@ create table USER_ACCT.BILL_REMARK
 
 alter table USER_ACCT.BILL_REMARK comment '描述帐单的可变文本。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BILL_VARIABLE_124                               */
+/*==============================================================*/
+create index I_FKK_BILL_VARIABLE_124 on USER_ACCT.BILL_REMARK
+(
+   BILL_VARIABLE_ID
+);
 
 /*==============================================================*/
 /* Table: BILL_VARIABLE                                         */
@@ -988,6 +1559,13 @@ create table CAPABILITY_INFO
 
 alter table CAPABILITY_INFO comment '计费网可以提供的所有能力的全集。计费网能力是计费网各网元提供的业务能力和处理能力的总和。';
 
+/*==============================================================*/
+/* Index: idx_nodename                                          */
+/*==============================================================*/
+create unique index idx_nodename on CAPABILITY_INFO
+(
+   CAPABILITY_NAME
+);
 
 /*==============================================================*/
 /* Table: CATALOG                                               */
@@ -1020,6 +1598,29 @@ create table USER_PRODUCT.CATALOG_ITEM
 
 alter table USER_PRODUCT.CATALOG_ITEM comment '是目录上的一个单位组成元素。每个节点可以包含一个或多个产品、销售品或归类节点。';
 
+/*==============================================================*/
+/* Index: I_FKK_BAND_258                                        */
+/*==============================================================*/
+create index I_FKK_BAND_258 on USER_PRODUCT.CATALOG_ITEM
+(
+   BAND_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CATALOG_177                                     */
+/*==============================================================*/
+create index I_FKK_CATALOG_177 on USER_PRODUCT.CATALOG_ITEM
+(
+   CATALOG_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CATALOG_ITEM_178                                */
+/*==============================================================*/
+create index I_FKK_CATALOG_ITEM_178 on USER_PRODUCT.CATALOG_ITEM
+(
+   PARENT_CATALOG_ITEM_ID
+);
 
 /*==============================================================*/
 /* Table: CATALOG_ITEM_ELEMENT                                  */
@@ -1035,6 +1636,13 @@ create table USER_PRODUCT.CATALOG_ITEM_ELEMENT
 
 alter table USER_PRODUCT.CATALOG_ITEM_ELEMENT comment '目录节点所包含的元素。';
 
+/*==============================================================*/
+/* Index: I_FKK_CATALOG_ITEM_176                                */
+/*==============================================================*/
+create index I_FKK_CATALOG_ITEM_176 on USER_PRODUCT.CATALOG_ITEM_ELEMENT
+(
+   CATALOG_ITEM_ID
+);
 
 /*==============================================================*/
 /* Table: CC_BUSINESS_TYPE                                      */
@@ -1194,6 +1802,14 @@ create table PARTY_USER.CHANNEL_SEGMENT
 alter table PARTY_USER.CHANNEL_SEGMENT comment '定义渠道分类方式。';
 
 /*==============================================================*/
+/* Index: I_FKK_PARTNER_111                                     */
+/*==============================================================*/
+create index I_FKK_PARTNER_111 on PARTY_USER.CHANNEL_SEGMENT
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
 /* Table: CHARGE_ADJUST_LOG                                     */
 /*==============================================================*/
 create table USER_ACCT.CHARGE_ADJUST_LOG
@@ -1208,6 +1824,21 @@ create table USER_ACCT.CHARGE_ADJUST_LOG
 
 alter table USER_ACCT.CHARGE_ADJUST_LOG comment '当由于费用计算错误或者别的原因，需要对用户的费用进行调整，为了保持调帐记录的信息，应该记录调帐日志。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_ADJUSTED_87                           */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_ADJUSTED_87 on USER_ACCT.CHARGE_ADJUST_LOG
+(
+   ACCT_ITEM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_136                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_136 on USER_ACCT.CHARGE_ADJUST_LOG
+(
+   STAFF_ID
+);
 
 /*==============================================================*/
 /* Table: CONTACT_MEDIUM                                        */
@@ -1223,7 +1854,29 @@ create table PARTY_USER.CONTACT_MEDIUM
 
 alter table PARTY_USER.CONTACT_MEDIUM comment '联系信息定义了参与人角色与地域的关系，包括参与人角色的各种联系地址、联系电话、MAIL地址等。';
 
+/*==============================================================*/
+/* Index: I_FKK_POLITICAL_REGION_339                            */
+/*==============================================================*/
+create index I_FKK_POLITICAL_REGION_339 on PARTY_USER.CONTACT_MEDIUM
+(
+   REGION_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ADDRESS_104                                     */
+/*==============================================================*/
+create index I_FKK_ADDRESS_104 on PARTY_USER.CONTACT_MEDIUM
+(
+   ADDRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_187                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_187 on PARTY_USER.CONTACT_MEDIUM
+(
+   PARTY_ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: CONTENT_CLASS                                         */
@@ -1240,8 +1893,21 @@ create table USER_PRODUCT.CONTENT_CLASS
 
 alter table USER_PRODUCT.CONTENT_CLASS comment 'SP/CP计费涉及的内容分类描述';
 
+/*==============================================================*/
+/* Index: I_FKK_CONTENT_CLASS_255                               */
+/*==============================================================*/
+create index I_FKK_CONTENT_CLASS_255 on USER_PRODUCT.CONTENT_CLASS
+(
+   PARENT_CLASS_ID
+);
 
-
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_256                                     */
+/*==============================================================*/
+create index I_FKK_PRODUCT_256 on USER_PRODUCT.CONTENT_CLASS
+(
+   PRODUCT_ID
+);
 
 /*==============================================================*/
 /* Table: CREDIT_GRADE                                          */
@@ -1271,7 +1937,13 @@ create table PARTY_USER.CREDIT_GRADE_RULE
 
 alter table PARTY_USER.CREDIT_GRADE_RULE comment '描述信用度分数和等级、信用额度等的关系';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CREDIT_GRADE_276                                */
+/*==============================================================*/
+create index I_FKK_CREDIT_GRADE_276 on PARTY_USER.CREDIT_GRADE_RULE
+(
+   CREDIT_GRADE_ID
+);
 
 /*==============================================================*/
 /* Table: CREDIT_RESULT                                         */
@@ -1290,6 +1962,13 @@ create table PARTY_USER.CREDIT_RESULT
 
 alter table PARTY_USER.CREDIT_RESULT comment '聚合信用度评估结果明细';
 
+/*==============================================================*/
+/* Index: I_FKK_CREDIT_GRADE_275                                */
+/*==============================================================*/
+create index I_FKK_CREDIT_GRADE_275 on PARTY_USER.CREDIT_RESULT
+(
+   CREDIT_GRADE_ID
+);
 
 /*==============================================================*/
 /* Table: CREDIT_RESULT_DETAIL                                  */
@@ -1307,7 +1986,13 @@ create table PARTY_USER.CREDIT_RESULT_DETAIL
 
 alter table PARTY_USER.CREDIT_RESULT_DETAIL comment '描述各种对象信用度评估结果明细值';
 
-
+/*==============================================================*/
+/* Index: I_FKK_EVAL_RULE_278                                   */
+/*==============================================================*/
+create index I_FKK_EVAL_RULE_278 on PARTY_USER.CREDIT_RESULT_DETAIL
+(
+   EVAL_RULE_ID
+);
 
 /*==============================================================*/
 /* Table: CREDIT_VALUE                                          */
@@ -1370,11 +2055,17 @@ create table PARTY_USER.CUST
    EFF_DATE             datetime not null comment '生效时间',
    EXP_DATE             datetime not null comment '失效时间',
    primary key (CUST_ID)
-  );
+);
 
 alter table PARTY_USER.CUST comment '指一个已获得或可能获得电信公司（包括第三方合作伙伴）所提供的产品和服务，并具有承担法律责任的能力的个人或者组织。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_300                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_300 on PARTY_USER.CUST
+(
+   PARTY_ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_ADD_INFO                                         */
@@ -1392,6 +2083,29 @@ create table PARTY_USER.CUST_ADD_INFO
 
 alter table PARTY_USER.CUST_ADD_INFO comment '定义了客户的一些相关附加信息，以记录客户的一些个性化的信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_98                                         */
+/*==============================================================*/
+create index I_FKK_CUST_98 on PARTY_USER.CUST_ADD_INFO
+(
+   CUST_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CUST_ADD_INFO_ITEM_169                          */
+/*==============================================================*/
+create index I_FKK_CUST_ADD_INFO_ITEM_169 on PARTY_USER.CUST_ADD_INFO
+(
+   INFO_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_173                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_173 on PARTY_USER.CUST_ADD_INFO
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_ADD_INFO_ITEM                                    */
@@ -1430,7 +2144,21 @@ create table PARTY_USER.CUST_CONTACT_INFO
 
 alter table PARTY_USER.CUST_CONTACT_INFO comment '定义了客户的联系人的信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_99                                         */
+/*==============================================================*/
+create index I_FKK_CUST_99 on PARTY_USER.CUST_CONTACT_INFO
+(
+   CUST_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_172                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_172 on PARTY_USER.CUST_CONTACT_INFO
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_CORPORATE_INFO                                   */
@@ -1455,8 +2183,29 @@ alter table PARTY_USER.CUST_CORPORATE_INFO comment '定义了企业单位性质�
 
 
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_96                                         */
+/*==============================================================*/
+create index I_FKK_CUST_96 on PARTY_USER.CUST_CORPORATE_INFO
+(
+   CUST_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_171                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_171 on PARTY_USER.CUST_CORPORATE_INFO
+(
+   AGREEMENT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_INDUSTRY_209                                    */
+/*==============================================================*/
+create index I_FKK_INDUSTRY_209 on PARTY_USER.CUST_CORPORATE_INFO
+(
+   INDUSTRY_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_CREDIT                                           */
@@ -1474,7 +2223,13 @@ create table PARTY_USER.CUST_CREDIT
 
 alter table PARTY_USER.CUST_CREDIT comment '记录了电信客户对电信运营商的忠诚度状况。根据客户的信用度和信用度红黑名单评判规则可以产生客户的红黑名单。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CUST_179                                        */
+/*==============================================================*/
+create index I_FKK_CUST_179 on PARTY_USER.CUST_CREDIT
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_CREDIT_RECORD                                    */
@@ -1491,7 +2246,13 @@ create table PARTY_USER.CUST_CREDIT_RECORD
 
 alter table PARTY_USER.CUST_CREDIT_RECORD comment '本实体记录了电信客户对电信服务费用的支付信用度状况，便于电信运营商能作出正确的优惠或处罚措施。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CUST_97                                         */
+/*==============================================================*/
+create index I_FKK_CUST_97 on PARTY_USER.CUST_CREDIT_RECORD
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_GROUP                                            */
@@ -1518,7 +2279,21 @@ create table PARTY_USER.CUST_GROUP_MEMBER
 
 alter table PARTY_USER.CUST_GROUP_MEMBER comment '描述了客户组所拥有的客户列表信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_109                                        */
+/*==============================================================*/
+create index I_FKK_CUST_109 on PARTY_USER.CUST_GROUP_MEMBER
+(
+   CUST_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_GROUP_110                                  */
+/*==============================================================*/
+create index I_FKK_CUST_GROUP_110 on PARTY_USER.CUST_GROUP_MEMBER
+(
+   CUST_GROUP_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_IDENTIFICATION                                   */
@@ -1536,7 +2311,13 @@ create table PARTY_USER.CUST_IDENTIFICATION
 
 alter table PARTY_USER.CUST_IDENTIFICATION comment '定义了客户在现实中用于证明自己身份的信息。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CUST_100                                        */
+/*==============================================================*/
+create index I_FKK_CUST_100 on PARTY_USER.CUST_IDENTIFICATION
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_INTERACTION                                      */
@@ -1554,6 +2335,13 @@ create table PARTY_USER.CUST_INTERACTION
 
 alter table PARTY_USER.CUST_INTERACTION comment '记录了电信运营商与电信客户互相联系时发生的事件的信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_95                                         */
+/*==============================================================*/
+create index I_FKK_CUST_95 on PARTY_USER.CUST_INTERACTION
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_INTERACTION_DETAIL                               */
@@ -1568,6 +2356,21 @@ create table PARTY_USER.CUST_INTERACTION_DETAIL
 
 alter table PARTY_USER.CUST_INTERACTION_DETAIL comment '记录了电信运营商与电信客户交互事件附加的详细信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_INTERACTION_166                            */
+/*==============================================================*/
+create index I_FKK_CUST_INTERACTION_166 on PARTY_USER.CUST_INTERACTION_DETAIL
+(
+   CUST_INTERACTION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CUST_INTERACTION_IT_167                         */
+/*==============================================================*/
+create index I_FKK_CUST_INTERACTION_IT_167 on PARTY_USER.CUST_INTERACTION_DETAIL
+(
+   INTERACTION_ITEM_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_INTERACTION_ITEM                                 */
@@ -1596,12 +2399,17 @@ create table PARTY_USER.CUST_LOYALTY_RECORD
 
 alter table PARTY_USER.CUST_LOYALTY_RECORD comment '本实体记录了电信客户对电信服务费用的支付信用度状况，便于电信运营商能作出正确的优惠或处罚措施。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_CUST_168                                        */
+/*==============================================================*/
+create index I_FKK_CUST_168 on PARTY_USER.CUST_LOYALTY_RECORD
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_PERSON_INFO                                      */
 /*==============================================================*/
-
 create table PARTY_USER.CUST_PERSON_INFO
 (
    CUST_ID              numeric(12,0) not null comment '帐户所属的客户唯一标识',
@@ -1623,6 +2431,29 @@ create table PARTY_USER.CUST_PERSON_INFO
 alter table PARTY_USER.CUST_PERSON_INFO comment '定义了个人性质的客户的一些相关信息。';
 
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_101                                        */
+/*==============================================================*/
+create index I_FKK_CUST_101 on PARTY_USER.CUST_PERSON_INFO
+(
+   CUST_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_170                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_170 on PARTY_USER.CUST_PERSON_INFO
+(
+   AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_INDUSTRY_208                                    */
+/*==============================================================*/
+create index I_FKK_INDUSTRY_208 on PARTY_USER.CUST_PERSON_INFO
+(
+   INDUSTRY_ID
+);
 
 /*==============================================================*/
 /* Table: CUST_TYPE                                             */
@@ -1636,6 +2467,13 @@ create table PARTY_USER.CUST_TYPE
 
 alter table PARTY_USER.CUST_TYPE comment '描述客户的分类，随着业务的不断发展，客户分类的方式不断变化，为了更好的适应业务发展的需要，增加客户类型实体，方便对客户的';
 
+/*==============================================================*/
+/* Index: I_FKK_CUST_102                                        */
+/*==============================================================*/
+create index I_FKK_CUST_102 on PARTY_USER.CUST_TYPE
+(
+   CUST_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: DATA_FORMAT                                           */
@@ -1667,6 +2505,13 @@ create table USER_EVENT.DEST_EVENT_FORMAT
 
 alter table USER_EVENT.DEST_EVENT_FORMAT comment '目标事件格式（dest event format）是可预定义和扩展的目标事件的格式信息。目标事件格式由目标事件格式项';
 
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_TYPE_312                             */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_TYPE_312 on USER_EVENT.DEST_EVENT_FORMAT
+(
+   EVENT_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: DEST_EVENT_FORMAT_ITEM                                */
@@ -1675,13 +2520,27 @@ create table USER_EVENT.DEST_EVENT_FORMAT_ITEM
 (
    EVENT_FORMAT_ID      numeric(9,0) not null comment '目标事件格式的唯一标识。',
    EVENT_ATTR_ID        numeric(9,0) not null comment '目标事件属性的唯一标识。',
-   _ORDER              numeric(5,0) not null comment '标识目标事件属性在计费帐务事件格式中的位置',
+   `ORDER`              numeric(5,0) not null comment '标识目标事件属性在计费帐务事件格式中的位置',
    primary key (EVENT_ATTR_ID, EVENT_FORMAT_ID)
 );
 
 alter table USER_EVENT.DEST_EVENT_FORMAT_ITEM comment '目标事件格式项中定义了构成目标事件格式项的目标事件属性及其在整个目标事件格式中的次序。';
 
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_FORMAT_311                           */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_FORMAT_311 on USER_EVENT.DEST_EVENT_FORMAT_ITEM
+(
+   EVENT_FORMAT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_ATTR_313                                  */
+/*==============================================================*/
+create index I_FKK_EVENT_ATTR_313 on USER_EVENT.DEST_EVENT_FORMAT_ITEM
+(
+   EVENT_ATTR_ID
+);
 
 /*==============================================================*/
 /* Table: DEST_EVENT_TYPE                                       */
@@ -1703,7 +2562,6 @@ alter table USER_EVENT.DEST_EVENT_TYPE comment '目标事件类型（dest event 
 /*==============================================================*/
 /* Table: DISCOUNT_CALC_OBJECT                                  */
 /*==============================================================*/
-
 create table USER_PRICING.DISCOUNT_CALC_OBJECT
 (
    DISCONT_EXPRESS_ID   numeric(9,0) not null comment '归属的优惠计算的标识',
@@ -1713,6 +2571,21 @@ create table USER_PRICING.DISCOUNT_CALC_OBJECT
 
 alter table USER_PRICING.DISCOUNT_CALC_OBJECT comment '用于定义执行一个优惠计算所需要参考的定价参考对象，这些对象的使用方式由优惠计算方法来决定。';
 
+/*==============================================================*/
+/* Index: I_FKK_DISCOUNT_EXPRESS_36                             */
+/*==============================================================*/
+create index I_FKK_DISCOUNT_EXPRESS_36 on USER_PRICING.DISCOUNT_CALC_OBJECT
+(
+   DISCONT_EXPRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_37                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_37 on USER_PRICING.DISCOUNT_CALC_OBJECT
+(
+   PRICING_REF_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: DISCOUNT_EXPRESS                                      */
@@ -1734,7 +2607,45 @@ create table USER_PRICING.DISCOUNT_EXPRESS
 
 alter table USER_PRICING.DISCOUNT_EXPRESS comment '构成定价过程中费用调整方案的具体实现方法，每个定价过程可包含一个或多个优惠计算。优惠计算方式包括折扣、赠送、减免、封顶保';
 
+/*==============================================================*/
+/* Index: I_FKK_DISCOUNT_METHOD_27                              */
+/*==============================================================*/
+create index I_FKK_DISCOUNT_METHOD_27 on USER_PRICING.DISCOUNT_EXPRESS
+(
+   DISCOUNT_METHOD_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_49                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_49 on USER_PRICING.DISCOUNT_EXPRESS
+(
+   PRICING_SECTION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_RATABLE_RESOURCE_50                             */
+/*==============================================================*/
+create index I_FKK_RATABLE_RESOURCE_50 on USER_PRICING.DISCOUNT_EXPRESS
+(
+   RATABLE_RESOURCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_230                                   */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_230 on USER_PRICING.DISCOUNT_EXPRESS
+(
+   END_REF_VALUE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_231                                   */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_231 on USER_PRICING.DISCOUNT_EXPRESS
+(
+   START_REF_VALUE_ID
+);
 
 /*==============================================================*/
 /* Table: DISCOUNT_METHOD                                       */
@@ -1761,6 +2672,13 @@ create table USER_PRICING.DISCOUNT_REPATITION_TYPE
 
 alter table USER_PRICING.DISCOUNT_REPATITION_TYPE comment '将优惠结果值摊分给多个优惠应用对象。建议的摊分方法只支持：均分、按费用总额摊分、按总时长摊分等，不建议支持太多的摊分方式';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_227                          */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_227 on USER_PRICING.DISCOUNT_REPATITION_TYPE
+(
+   PRICING_REF_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: DISCOUNT_TARGET_OBJECT                                */
@@ -1775,6 +2693,29 @@ create table USER_PRICING.DISCOUNT_TARGET_OBJECT
 
 alter table USER_PRICING.DISCOUNT_TARGET_OBJECT comment '定义优惠处理结果的应用目标，它可以是费用项、客户等对象。建议的摊分方法只支持：均分、按费用总额摊分、按总时长摊分等，不建';
 
+/*==============================================================*/
+/* Index: I_FKK_DISCOUNT_EXPRESS_46                             */
+/*==============================================================*/
+create index I_FKK_DISCOUNT_EXPRESS_46 on USER_PRICING.DISCOUNT_TARGET_OBJECT
+(
+   DISCOUNT_EXPRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_47                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_47 on USER_PRICING.DISCOUNT_TARGET_OBJECT
+(
+   PRICING_REF_OBJECT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_DISCOUNT_REPATITION_T_48                        */
+/*==============================================================*/
+create index I_FKK_DISCOUNT_REPATITION_T_48 on USER_PRICING.DISCOUNT_TARGET_OBJECT
+(
+   REPATITION_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: DISCOUNT_TIME_LIMIT                                   */
@@ -1795,6 +2736,29 @@ create table USER_PRICING.DISCOUNT_TIME_LIMIT
 
 alter table USER_PRICING.DISCOUNT_TIME_LIMIT comment '用于定义优惠执行较复杂的时间方面的限制，如按照某个属性计算生效日期、在多少个帐期内有效等。';
 
+/*==============================================================*/
+/* Index: I_FKK_DISCOUNT_EXPRESS_28                             */
+/*==============================================================*/
+create index I_FKK_DISCOUNT_EXPRESS_28 on USER_PRICING.DISCOUNT_TIME_LIMIT
+(
+   DISCOUNT_EXPRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_29                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_29 on USER_PRICING.DISCOUNT_TIME_LIMIT
+(
+   BEGIN_CALC_OBJECT
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_30                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_30 on USER_PRICING.DISCOUNT_TIME_LIMIT
+(
+   END_CALC_OBJECT
+);
 
 /*==============================================================*/
 /* Table: EMULATORY_PARTNER                                     */
@@ -1811,6 +2775,13 @@ create table PARTY_USER.EMULATORY_PARTNER
 alter table PARTY_USER.EMULATORY_PARTNER comment '对等运营商是指在电信业务活动中与中国电信主要存在竞争关系的其他运营商。包括中国网通、中国移动、中国联通、中国铁通等。
                                                  ';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_185                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_185 on PARTY_USER.EMULATORY_PARTNER
+(
+   PARTY_ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: EQUIP                                                 */
@@ -1827,6 +2798,14 @@ create table USER_LOCATION.EQUIP
 alter table USER_LOCATION.EQUIP comment '指构成该设备覆盖的交换机、基站等';
 
 /*==============================================================*/
+/* Index: I_FKK_EQUIP_TYPE_329                                  */
+/*==============================================================*/
+create index I_FKK_EQUIP_TYPE_329 on USER_LOCATION.EQUIP
+(
+   EQUIP_TYPE_ID
+);
+
+/*==============================================================*/
 /* Table: EQUIP_REGION                                          */
 /*==============================================================*/
 create table USER_LOCATION.EQUIP_REGION
@@ -1838,6 +2817,21 @@ create table USER_LOCATION.EQUIP_REGION
 
 alter table USER_LOCATION.EQUIP_REGION comment '设备覆盖区域是指根据设备管理需要划分的一种电信管理区域。可以包括构成设备覆盖区域的交换机、基站等。';
 
+/*==============================================================*/
+/* Index: I_FKK_EQUIP_328                                       */
+/*==============================================================*/
+create index I_FKK_EQUIP_328 on USER_LOCATION.EQUIP_REGION
+(
+   EQUIP_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REGION_337                                      */
+/*==============================================================*/
+create index I_FKK_REGION_337 on USER_LOCATION.EQUIP_REGION
+(
+   REGION_ID
+);
 
 /*==============================================================*/
 /* Table: EQUIP_TYPE                                            */
@@ -1918,6 +2912,21 @@ create table PARTY_USER.EVAL_RULE
 
 alter table PARTY_USER.EVAL_RULE comment '定义影响信用度和积分评估指标的各种因素及各类因素的比重。';
 
+/*==============================================================*/
+/* Index: I_FKK_EVAL_PLAN_274                                   */
+/*==============================================================*/
+create index I_FKK_EVAL_PLAN_274 on PARTY_USER.EVAL_RULE
+(
+   EVAL_PLAN_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EVAL_INDEX_280                                  */
+/*==============================================================*/
+create index I_FKK_EVAL_INDEX_280 on PARTY_USER.EVAL_RULE
+(
+   TARGET_ID
+);
 
 /*==============================================================*/
 /* Table: EVENT_ATTR                                            */
@@ -1928,7 +2937,7 @@ create table USER_EVENT.EVENT_ATTR
    EVENT_ATTR_TYPE      varchar(3) not null comment '0－源事件 1－计费帐务事件',
    DATA_TYPE            varchar(3) not null comment '事件属性的类型',
    LENGTH               numeric(8,0) not null comment '属性的数据长度',
-   _PRECISION            numeric(5,0) not null comment '事件属性的精度。',
+   `PRECISION`            numeric(5,0) not null comment '事件属性的精度。',
    CH_NAME              varchar(50) not null comment '事件属性的中文名称',
    EN_NAME              varchar(50) not null comment '事件属性的英文名称',
    primary key (EVENT_ATTR_ID)
@@ -1949,7 +2958,21 @@ create table USER_EVENT.EVENT_CONTENT
 
 alter table USER_EVENT.EVENT_CONTENT comment '定义了源事件、目标事件的内容。对目标事件，实际存放时，可参考目标事件的格式对事件内容以横表方式或其它方式存放。';
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_CONTENT_INDEX_302                         */
+/*==============================================================*/
+create index I_FKK_EVENT_CONTENT_INDEX_302 on USER_EVENT.EVENT_CONTENT
+(
+   EVENT_CONTENT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_ATTR_303                                  */
+/*==============================================================*/
+create index I_FKK_EVENT_ATTR_303 on USER_EVENT.EVENT_CONTENT
+(
+   EVENT_ATTR_ID
+);
 
 /*==============================================================*/
 /* Table: EVENT_CONTENT_INDEX                                   */
@@ -1974,9 +2997,15 @@ create table USER_PRICING.EVENT_PRICING_STRATEGY
    primary key (EVENT_PRICING_STRATEGY_ID)
 );
 
-alter table USER_PRICING.EVENT_PRICING_STRATEGY comment '事件定价策略就是定义针对一个特定计费帐务事件进行费用计算的方法，对资费和优惠的描述和表达均适用';
+alter table USER_PRICING.EVENT_PRICING_STRATEGY comment '事件定价策略就是定义针对一个特定计费帐务事件进行费用计算的方法，对资费和优惠的描述和表达均适用。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_TYPE_321                             */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_TYPE_321 on USER_PRICING.EVENT_PRICING_STRATEGY
+(
+   EVENT_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: EXTERNAL_PRODUCT                                      */
@@ -1994,6 +3023,14 @@ create table USER_PRODUCT.EXTERNAL_PRODUCT
 );
 
 alter table USER_PRODUCT.EXTERNAL_PRODUCT comment '外部产品主要记录了具有竞争关系的其外运营商所提供的产品/服务的情报信息；主要用来进行市场分析。';
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_203                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_203 on USER_PRODUCT.EXTERNAL_PRODUCT
+(
+   PRODUCT_PROVIDER_ID
+);
 
 /*==============================================================*/
 /* Table: EXTERNAL_STATS2                                       */
@@ -2015,7 +3052,13 @@ create table USER_STAT.EXTERNAL_STATS2
 
 alter table USER_STAT.EXTERNAL_STATS2 comment '存放外部树的统计数据，根据外部树与对应内部树的引用关系从Internal_Stats中计算获得，其他部分游离指标数据通过';
 
-
+/*==============================================================*/
+/* Index: I_FKK_EXTERNAL_TREE_STRUCT_360                        */
+/*==============================================================*/
+create index I_FKK_EXTERNAL_TREE_STRUCT_360 on USER_STAT.EXTERNAL_STATS2
+(
+   EXTERNAL_TREE_NODE_ID
+);
 
 /*==============================================================*/
 /* Table: EXTERNAL_TREE_STRUCT2                                 */
@@ -2055,8 +3098,15 @@ create table USER_STAT.EXTERNAL_TREE_STRUCT2
    primary key (EXTERNAL_TREE_NODE_ID)
 );
 
-alter table USER_STAT.EXTERNAL_TREE_STRUCT2 comment '外部树的树状结构定义1. 外部树与内部树成对出现，有多少棵内部树就需要构建相应数量、类型的外部树。';
+alter table USER_STAT.EXTERNAL_TREE_STRUCT2 comment '外部树的树状结构定义';
 
+/*==============================================================*/
+/* Index: I_FKK_TARGET_TREE_355                                 */
+/*==============================================================*/
+create index I_FKK_TARGET_TREE_355 on USER_STAT.EXTERNAL_TREE_STRUCT2
+(
+   EXTERNAL_TREE_ID
+);
 
 /*==============================================================*/
 /* Table: FACT_TABLE_COLUMN2                                    */
@@ -2077,6 +3127,14 @@ create table USER_STAT.FACT_TABLE_COLUMN2
 );
 
 alter table USER_STAT.FACT_TABLE_COLUMN2 comment '定义顶层中间层相关字段信息';
+
+/*==============================================================*/
+/* Index: I_FKK_FACT_TABLE_DEFINE_352                           */
+/*==============================================================*/
+create index I_FKK_FACT_TABLE_DEFINE_352 on USER_STAT.FACT_TABLE_COLUMN2
+(
+   FACT_TABLE_ID
+);
 
 /*==============================================================*/
 /* Table: FACT_TABLE_DEFINE2                                    */
@@ -2113,6 +3171,8 @@ create table USER_PRODUCT.GROUP_INSTANCE
 
 alter table USER_PRODUCT.GROUP_INSTANCE comment '群组实例';
 
+
+
 /*==============================================================*/
 /* Table: GROUP_INSTANCE_MEMBER                                 */
 /*==============================================================*/
@@ -2132,7 +3192,45 @@ create table USER_PRODUCT.GROUP_INSTANCE_MEMBER
 
 alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER comment '描述了群组中包含的成员，类型由群组成员类型定义';
 
+/*==============================================================*/
+/* Index: I_FKK_GROUP_INSTANCE_270                              */
+/*==============================================================*/
+create index I_FKK_GROUP_INSTANCE_270 on USER_PRODUCT.GROUP_INSTANCE_MEMBER
+(
+   GROUP_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_LIFE_CYCLE_271                                  */
+/*==============================================================*/
+create index I_FKK_LIFE_CYCLE_271 on USER_PRODUCT.GROUP_INSTANCE_MEMBER
+(
+   LIFE_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_GROUP_MEMBER_TYPE_262                           */
+/*==============================================================*/
+create index I_FKK_GROUP_MEMBER_TYPE_262 on USER_PRODUCT.GROUP_INSTANCE_MEMBER
+(
+   MEMBER_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_GROUP_INSTANCE_ROLE_263                         */
+/*==============================================================*/
+create index I_FKK_GROUP_INSTANCE_ROLE_263 on USER_PRODUCT.GROUP_INSTANCE_MEMBER
+(
+   MEMBER_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_264                                        */
+/*==============================================================*/
+create index I_FKK_SERV_264 on USER_PRODUCT.GROUP_INSTANCE_MEMBER
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: GROUP_INSTANCE_ROLE                                   */
@@ -2217,6 +3315,21 @@ create table USER_LOCATION.HCODE
 
 alter table USER_LOCATION.HCODE comment 'H码定义表，手机号头与区号对应关系';
 
+/*==============================================================*/
+/* Index: I_FKK_POLITICAL_REGION_326                            */
+/*==============================================================*/
+create index I_FKK_POLITICAL_REGION_326 on USER_LOCATION.HCODE
+(
+   POLITICAL_REGION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EMULATORY_PARTNER_330                           */
+/*==============================================================*/
+create index I_FKK_EMULATORY_PARTNER_330 on USER_LOCATION.HCODE
+(
+   EMULATORY_PARTNER_ID
+);
 
 /*==============================================================*/
 /* Table: IDEP_INFO                                             */
@@ -2255,6 +3368,13 @@ create table PARTY_USER.INDIVIDUAL
 
 alter table PARTY_USER.INDIVIDUAL comment '个人是指一个独立的自然人，包括成人和小孩。';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTY_181                                       */
+/*==============================================================*/
+create index I_FKK_PARTY_181 on PARTY_USER.INDIVIDUAL
+(
+   INDIVIDUAL_ID
+);
 
 /*==============================================================*/
 /* Table: INDUSTRY                                              */
@@ -2284,6 +3404,13 @@ create table PARTY_USER.INTEGRAL_REAULT_DETAIL
 
 alter table PARTY_USER.INTEGRAL_REAULT_DETAIL comment '描述积分评估结果明细';
 
+/*==============================================================*/
+/* Index: I_FKK_EVAL_RULE_277                                   */
+/*==============================================================*/
+create index I_FKK_EVAL_RULE_277 on PARTY_USER.INTEGRAL_REAULT_DETAIL
+(
+   EVAL_RULE_ID
+);
 
 /*==============================================================*/
 /* Table: INTEGRAL_RESULT                                       */
@@ -2346,7 +3473,13 @@ create table USER_STAT.INTERNAL_STRUCT_ITEM2
 
 alter table USER_STAT.INTERNAL_STRUCT_ITEM2 comment '定义内部树节点与原子树叶子取值关系表,内部树与原子树的引用关系通过这个实体表示';
 
-
+/*==============================================================*/
+/* Index: I_FKK_INTERNAL_TREE_STRUCT_357                        */
+/*==============================================================*/
+create index I_FKK_INTERNAL_TREE_STRUCT_357 on USER_STAT.INTERNAL_STRUCT_ITEM2
+(
+   INTERNAL_TREE_NODE_ID
+);
 
 /*==============================================================*/
 /* Table: INTERNAL_TREE_STRUCT2                                 */
@@ -2380,7 +3513,29 @@ create table USER_STAT.INTERNAL_TREE_STRUCT2
 
 alter table USER_STAT.INTERNAL_TREE_STRUCT2 comment '内部树的树状结构定义1. 维护内部树的树状结构，按照财务部、市场部、综合统计部门对指标统计的要求分别构建财';
 
+/*==============================================================*/
+/* Index: I_FKK_TARGET_TREE_354                                 */
+/*==============================================================*/
+create index I_FKK_TARGET_TREE_354 on USER_STAT.INTERNAL_TREE_STRUCT2
+(
+   INTERNAL_TREE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ATOM_TREE_STRUCT_359                            */
+/*==============================================================*/
+create index I_FKK_ATOM_TREE_STRUCT_359 on USER_STAT.INTERNAL_TREE_STRUCT2
+(
+   ATOM_TREE_NODE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_FACT_TABLE_DEFINE_363                           */
+/*==============================================================*/
+create index I_FKK_FACT_TABLE_DEFINE_363 on USER_STAT.INTERNAL_TREE_STRUCT2
+(
+   FACT_TABLE_ID
+);
 
 /*==============================================================*/
 /* Table: INVOICE                                               */
@@ -2405,6 +3560,38 @@ create table USER_ACCT.INVOICE
 alter table USER_ACCT.INVOICE comment '记录每张发票的关键信息。包括金额、打印次数等。';
 
 /*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_74                                */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_74 on USER_ACCT.INVOICE
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_75                                      */
+/*==============================================================*/
+create index I_FKK_PAYMENT_75 on USER_ACCT.INVOICE
+(
+   PAYMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_146                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_146 on USER_ACCT.INVOICE
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILL_FORMAT_CUSTOMI_288                         */
+/*==============================================================*/
+create index I_FKK_BILL_FORMAT_CUSTOMI_288 on USER_ACCT.INVOICE
+(
+   BILL_FORMAT_CUSTOMIZE_ID
+);
+
+/*==============================================================*/
 /* Table: INVOICE_DETAIL                                        */
 /*==============================================================*/
 create table USER_ACCT.INVOICE_DETAIL
@@ -2418,6 +3605,13 @@ create table USER_ACCT.INVOICE_DETAIL
 
 alter table USER_ACCT.INVOICE_DETAIL comment '记录发票的详细信息';
 
+/*==============================================================*/
+/* Index: I_FKK_INVOICE_284                                     */
+/*==============================================================*/
+create index I_FKK_INVOICE_284 on USER_ACCT.INVOICE_DETAIL
+(
+   INVOICE_ID
+);
 
 /*==============================================================*/
 /* Table: KEY_ID_DEFINE2                                        */
@@ -2455,7 +3649,6 @@ alter table LICENSE comment '描述网元许可证书的基本信息。网元上
 /*==============================================================*/
 /* Table: LIFE_CYCLE                                            */
 /*==============================================================*/
-
 create table USER_PRICING.LIFE_CYCLE
 (
    LIFE_CYCLE_ID        numeric(9,0) not null comment '生命周期的标识',
@@ -2473,7 +3666,6 @@ alter table USER_PRICING.LIFE_CYCLE comment '用于定义定价域模型中相�
 /*==============================================================*/
 /* Table: LIFE_CYCLE2                                           */
 /*==============================================================*/
-
 create table USER_PRICING.LIFE_CYCLE2
 (
    LIFE_CYCLE_ID        numeric(9,0) not null comment '生命周期的标识',
@@ -2504,6 +3696,21 @@ create table USER_LOCATION.LOCAL_HEAD
 
 alter table USER_LOCATION.LOCAL_HEAD comment '本地号头信息';
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_325                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_325 on USER_LOCATION.LOCAL_HEAD
+(
+   EXCHANGE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EMULATORY_PARTNER_332                           */
+/*==============================================================*/
+create index I_FKK_EMULATORY_PARTNER_332 on USER_LOCATION.LOCAL_HEAD
+(
+   EMULATORY_PARTNER_ID
+);
 
 /*==============================================================*/
 /* Table: LOGICAL_ADDRESS                                       */
@@ -2519,7 +3726,13 @@ create table USER_LOCATION.LOGICAL_ADDRESS
 
 alter table USER_LOCATION.LOGICAL_ADDRESS comment '描述参与人及产品的逻辑地址。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_ADDRESS_180                                     */
+/*==============================================================*/
+create index I_FKK_ADDRESS_180 on USER_LOCATION.LOGICAL_ADDRESS
+(
+   ADDRESS_ID
+);
 
 /*==============================================================*/
 /* Table: MAKET_STRATEGY                                        */
@@ -2540,7 +3753,6 @@ alter table USER_PRODUCT.MAKET_STRATEGY comment '描述推出销售品所要达�
 /*==============================================================*/
 /* Table: MEASURE_METHOD                                        */
 /*==============================================================*/
-
 create table USER_PRICING.MEASURE_METHOD
 (
    MEASURE_METHOD_ID    numeric(9,0) not null comment '度量方法的标识',
@@ -2564,6 +3776,21 @@ create table USER_STAT.MID_ID_DEFINE2
 
 alter table USER_STAT.MID_ID_DEFINE2 comment '定义中间层的分类及中间层包含关键ID的信息';
 
+/*==============================================================*/
+/* Index: I_FKK_KEY_ID_DEFINE_350                               */
+/*==============================================================*/
+create index I_FKK_KEY_ID_DEFINE_350 on USER_STAT.MID_ID_DEFINE2
+(
+   KEY_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_MID_TABLE_DEFINE_362                            */
+/*==============================================================*/
+create index I_FKK_MID_TABLE_DEFINE_362 on USER_STAT.MID_ID_DEFINE2
+(
+   MID_TABLE_ID
+);
 
 /*==============================================================*/
 /* Table: MID_TABLE_COLUMN2                                     */
@@ -2579,6 +3806,13 @@ create table USER_STAT.MID_TABLE_COLUMN2
 
 alter table USER_STAT.MID_TABLE_COLUMN2 comment '定义各个中间层包含的字段信息';
 
+/*==============================================================*/
+/* Index: I_FKK_MID_TABLE_DEFINE_351                            */
+/*==============================================================*/
+create index I_FKK_MID_TABLE_DEFINE_351 on USER_STAT.MID_TABLE_COLUMN2
+(
+   MID_TABLE_ID
+);
 
 /*==============================================================*/
 /* Table: MID_TABLE_DEFINE2                                     */
@@ -2635,6 +3869,14 @@ create table NODE_INFO
 );
 
 alter table NODE_INFO comment '描述业务网元的基本信息。包括除IDEP、SC等传输、管理类网元外的所有网元。网元之间存在一定的层次关系。';
+
+/*==============================================================*/
+/* Index: idx_NodeInfo_NodeName                                 */
+/*==============================================================*/
+create unique index idx_NodeInfo_NodeName on NODE_INFO
+(
+   NODE_NAME
+);
 
 /*==============================================================*/
 /* Table: OCS_RESERVE_EVENT_GRP                                 */
@@ -2716,6 +3958,29 @@ create table PARTY_USER.ORGANIZATION
 
 alter table PARTY_USER.ORGANIZATION comment '组织是指一群具有共同兴趣和目标个人，包括：企事业单位、政府等。';
 
+/*==============================================================*/
+/* Index: I_FKK_REGION_338                                      */
+/*==============================================================*/
+create index I_FKK_REGION_338 on PARTY_USER.ORGANIZATION
+(
+   REGION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_182                                       */
+/*==============================================================*/
+create index I_FKK_PARTY_182 on PARTY_USER.ORGANIZATION
+(
+   ORG_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ORGANIZATION_183                                */
+/*==============================================================*/
+create index I_FKK_ORGANIZATION_183 on PARTY_USER.ORGANIZATION
+(
+   PARENT_ORGID
+);
 
 /*==============================================================*/
 /* Table: OWE_BUSINESS_TYPE                                     */
@@ -2746,7 +4011,29 @@ create table USER_ACCT.OWE_DATETYPE_INFO
 
 alter table USER_ACCT.OWE_DATETYPE_INFO comment '对于不同本地网，欠费处理时间类型的值可能不一样，因此需要进行不同的定义。';
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_DATE_TYPE_81                                */
+/*==============================================================*/
+create index I_FKK_OWE_DATE_TYPE_81 on USER_ACCT.OWE_DATETYPE_INFO
+(
+   DATE_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_129                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_129 on USER_ACCT.OWE_DATETYPE_INFO
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_130                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_130 on USER_ACCT.OWE_DATETYPE_INFO
+(
+   REGION_ID
+);
 
 /*==============================================================*/
 /* Table: OWE_DATE_TYPE                                         */
@@ -2791,6 +4078,21 @@ create table USER_ACCT.OWE_TASK
 
 alter table USER_ACCT.OWE_TASK comment '由于存在不同欠费处理类型，不同的欠费处理类型处理时间、处理对象、处理条件肯定不一样，同时对于相同的欠费处理类型，处理时间';
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_BUSINESS_TYPE_127                           */
+/*==============================================================*/
+create index I_FKK_OWE_BUSINESS_TYPE_127 on USER_ACCT.OWE_TASK
+(
+   OWE_BUSINESS_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_OWE_DATETYPE_INFO_128                           */
+/*==============================================================*/
+create index I_FKK_OWE_DATETYPE_INFO_128 on USER_ACCT.OWE_TASK
+(
+   TIME_INFO_ID
+);
 
 /*==============================================================*/
 /* Table: OWE_TASK_OBJECT                                       */
@@ -2804,6 +4106,21 @@ create table USER_ACCT.OWE_TASK_OBJECT
 
 alter table USER_ACCT.OWE_TASK_OBJECT comment '欠费处理任务和处理对象的关联表';
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_TASK_85                                     */
+/*==============================================================*/
+create index I_FKK_OWE_TASK_85 on USER_ACCT.OWE_TASK_OBJECT
+(
+   OWE_TASK_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_OWE_OBJECT_86                                   */
+/*==============================================================*/
+create index I_FKK_OWE_OBJECT_86 on USER_ACCT.OWE_TASK_OBJECT
+(
+   OWE_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: OWE_TYPE_ACCTTYPE                                     */
@@ -2817,7 +4134,21 @@ create table USER_ACCT.OWE_TYPE_ACCTTYPE
 
 alter table USER_ACCT.OWE_TYPE_ACCTTYPE comment '定义每个欠费处理类型处理时参与的帐目类型，例如停来电显示时只选用来电信显示的费用。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_120                              */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_120 on USER_ACCT.OWE_TYPE_ACCTTYPE
+(
+   ACCT_ITEM_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_BUSINESS_TYPE_131                           */
+/*==============================================================*/
+create index I_FKK_OWE_BUSINESS_TYPE_131 on USER_ACCT.OWE_TYPE_ACCTTYPE
+(
+   OWE_BUSINESS_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: OWE_TYPE_LIMIT                                        */
@@ -2830,10 +4161,17 @@ create table USER_ACCT.OWE_TYPE_LIMIT
    CREDIT_FLOOR         numeric(5,0) not null comment '表示信用度阀值下限',
    QUANTITY             numeric(12,0) not null comment '表示欠费额度，以分为单位',
    primary key (OWE_TYPE_LIMIT_ID)
-);
+   );
 
 alter table USER_ACCT.OWE_TYPE_LIMIT comment '定义每个欠费处理类型针对不同信用度的客户的欠费总额.';
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_BUSINESS_TYPE_126                           */
+/*==============================================================*/
+create index I_FKK_OWE_BUSINESS_TYPE_126 on USER_ACCT.OWE_TYPE_LIMIT
+(
+   OWE_BUSINESS_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: OWNER                                                 */
@@ -2863,6 +4201,13 @@ create table PARTY_USER.PARTNER
 
 alter table PARTY_USER.PARTNER comment '合作伙伴是指在电信业务活动中与中国电信拥有共同的目标和利益并承担相应职责的组织。根据合作性质可以分为：设备供应商、服务提';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_186                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_186 on PARTY_USER.PARTNER
+(
+   PARTY_ID
+);
 
 /*==============================================================*/
 /* Table: PARTNER_ACCT_ITEM                                     */
@@ -2881,6 +4226,22 @@ create table USER_ACCT.PARTNER_ACCT_ITEM
 );
 
 alter table USER_ACCT.PARTNER_ACCT_ITEM comment '表示SP/CP的帐目数据，用于SP/CP的结算，物理落地方式留给厂家自己根据需要实现';
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_348                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_348 on USER_ACCT.PARTNER_ACCT_ITEM
+(
+   LATN_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_62                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_62 on USER_ACCT.PARTNER_ACCT_ITEM
+(
+   ACCT_ITEM_TYPE_ID
+);
 
 
 
@@ -2901,6 +4262,13 @@ create table PARTY_USER.PARTNER_AGREEMENT
 
 alter table PARTY_USER.PARTNER_AGREEMENT comment '合作伙伴签署的协议';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTNER_283                                     */
+/*==============================================================*/
+create index I_FKK_PARTNER_283 on PARTY_USER.PARTNER_AGREEMENT
+(
+   PARTNER_ID
+);
 
 /*==============================================================*/
 /* Table: PARTY                                                 */
@@ -2934,6 +4302,13 @@ create table PARTY_USER.PARTY_IDENTIFICATION
 
 alter table PARTY_USER.PARTY_IDENTIFICATION comment '参与人标识是指用于唯一确定参与人身份的各种证件标识。例如个人公民身份证、企业的税务登记证等。';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTY_102                                       */
+/*==============================================================*/
+create index I_FKK_PARTY_102 on PARTY_USER.PARTY_IDENTIFICATION
+(
+   PARTY_ID
+);
 
 /*==============================================================*/
 /* Table: PARTY_ROLE                                            */
@@ -2951,6 +4326,13 @@ create table PARTY_USER.PARTY_ROLE
 
 alter table PARTY_USER.PARTY_ROLE comment '参与人角色是对参与人在电信业务活动中所表现的行为和特征的分类归纳定义，包括：电信内部参与人、合作伙伴、对等运营商、客户。';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTY_188                                       */
+/*==============================================================*/
+create index I_FKK_PARTY_188 on PARTY_USER.PARTY_ROLE
+(
+   PARTY_ID
+);
 
 /*==============================================================*/
 /* Table: PAYMENT                                               */
@@ -2973,6 +4355,29 @@ create table USER_ACCT.PAYMENT
 
 alter table USER_ACCT.PAYMENT comment '记录帐户付款过程的相关信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_METHOD_122                              */
+/*==============================================================*/
+create index I_FKK_PAYMENT_METHOD_122 on USER_ACCT.PAYMENT
+(
+   PAYMENT_METHOD
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_147                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_147 on USER_ACCT.PAYMENT
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_METHOD_207                              */
+/*==============================================================*/
+create index I_FKK_PAYMENT_METHOD_207 on USER_ACCT.PAYMENT
+(
+   PAYED_METHOD
+);
 
 /*==============================================================*/
 /* Table: PAYMENT_METHOD                                        */
@@ -3007,7 +4412,21 @@ create table USER_ACCT.PAYMENT_PLAN
 
 alter table USER_ACCT.PAYMENT_PLAN comment '定义帐户的各种支付方案，包括现金、银行托收、买断、信用卡等。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_286                                        */
+/*==============================================================*/
+create index I_FKK_ACCT_286 on USER_ACCT.PAYMENT_PLAN
+(
+   ACCT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_METHOD_287                              */
+/*==============================================================*/
+create index I_FKK_PAYMENT_METHOD_287 on USER_ACCT.PAYMENT_PLAN
+(
+   PAYMENT_METHOD
+);
 
 /*==============================================================*/
 /* Table: PAYMENT_RULE                                          */
@@ -3023,7 +4442,13 @@ create table USER_ACCT.PAYMENT_RULE
 
 alter table USER_ACCT.PAYMENT_RULE comment '在客户协议中规定的有关客户的每种费用由哪个帐户支付的规则条目。客户可以通过客户协议、支付规则来查询或定制每类费用的支付帐';
 
-
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_119                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_119 on USER_ACCT.PAYMENT_RULE
+(
+   CUST_AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: PAY_STRATEGY                                          */
@@ -3065,7 +4490,37 @@ create table USER_ACCT.PLUSMINUS
 
 alter table USER_ACCT.PLUSMINUS comment '记录每个设备号码的补收补退信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_71                               */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_71 on USER_ACCT.PLUSMINUS
+(
+   ACCT_ITEM_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_76                                */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_76 on USER_ACCT.PLUSMINUS
+(
+   BILLING_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_144                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_144 on USER_ACCT.PLUSMINUS
+(
+   FEE_CYCLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_145                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_145 on USER_ACCT.PLUSMINUS
+(
+   PARTY_ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: POLITICAL_REGION                                      */
@@ -3082,6 +4537,22 @@ create table USER_LOCATION.POLITICAL_REGION
 alter table USER_LOCATION.POLITICAL_REGION comment '描述行政区域可以用“位于”的关系进行如下描述：如国家->省(直辖市、自治区、特别行政区) ->城市->县（分局）。';
 
 /*==============================================================*/
+/* Index: I_FKK_POLITICAL_REGION_333                            */
+/*==============================================================*/
+create index I_FKK_POLITICAL_REGION_333 on USER_LOCATION.POLITICAL_REGION
+(
+   PARENT_REGION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REGION_334                                      */
+/*==============================================================*/
+create index I_FKK_REGION_334 on USER_LOCATION.POLITICAL_REGION
+(
+   REGION_ID
+);
+
+/*==============================================================*/
 /* Table: PRERATE_EVENT                                         */
 /*==============================================================*/
 create table USER_EVENT.PRERATE_EVENT
@@ -3095,6 +4566,29 @@ create table USER_EVENT.PRERATE_EVENT
 
 alter table USER_EVENT.PRERATE_EVENT comment '预处理后计费事件（pre-processed event）是在计费预处理阶段，基于源事件（source_event）生成';
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_CONTENT_INDEX_305                         */
+/*==============================================================*/
+create index I_FKK_EVENT_CONTENT_INDEX_305 on USER_EVENT.PRERATE_EVENT
+(
+   EVENT_CONTENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_TYPE_307                             */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_TYPE_307 on USER_EVENT.PRERATE_EVENT
+(
+   EVENT_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_309                                */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_309 on USER_EVENT.PRERATE_EVENT
+(
+   EVENT_ID
+);
 
 /*==============================================================*/
 /* Table: PRESENT                                               */
@@ -3134,6 +4628,25 @@ create table USER_PRICING.PRICING_COMBINE
 
 alter table USER_PRICING.PRICING_COMBINE comment '一个定价计划可由一个或多个事件定价策略组合而成，一个事件定价策略又可由一个或多个定价计划所引用，此实体描述了定价计划和定';
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_PRICING_STRAT__42                         */
+/*==============================================================*/
+create index I_FKK_EVENT_PRICING_STRAT__42 on USER_PRICING.PRICING_COMBINE
+(
+   EVENT_PRICING_STRATEGY_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_PLAN_43                                 */
+/*==============================================================*/
+create index I_FKK_PRICING_PLAN_43 on USER_PRICING.PRICING_COMBINE
+(
+   PRICING_PLAN_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_LIFE_CYCLE_51                                   */
+/*==============================================================*/
 
 
 /*==============================================================*/
@@ -3149,12 +4662,25 @@ create table USER_PRICING.PRICING_COMBINE_RELATION
 
 alter table USER_PRICING.PRICING_COMBINE_RELATION comment '定义定价组合的几种具体关系。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_COMBINE_52                              */
+/*==============================================================*/
+create index I_FKK_PRICING_COMBINE_52 on USER_PRICING.PRICING_COMBINE_RELATION
+(
+   A_PRICING_COMBINE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_COMBINE_53                              */
+/*==============================================================*/
+create index I_FKK_PRICING_COMBINE_53 on USER_PRICING.PRICING_COMBINE_RELATION
+(
+   Z_PRICING_COMBINE_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_ENUM_PARAM                                    */
 /*==============================================================*/
-
 create table USER_PRICING.PRICING_ENUM_PARAM
 (
    ENUM_ID              numeric(9,0) not null comment '离散取值的标识',
@@ -3165,6 +4691,13 @@ create table USER_PRICING.PRICING_ENUM_PARAM
 
 alter table USER_PRICING.PRICING_ENUM_PARAM comment '用于定义枚举型参数可以赋予的有限取值的集合。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_PARAM_DEFINE_38                         */
+/*==============================================================*/
+create index I_FKK_PRICING_PARAM_DEFINE_38 on USER_PRICING.PRICING_ENUM_PARAM
+(
+   PRICING_PARAM_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_PARAM_DEFINE                                  */
@@ -3189,8 +4722,7 @@ create table USER_PRICING.PRICING_PLAN
    PRICING_DESC         varchar(4000) not null comment '定价计划的资费说明。',
    PARAM_DESC           varchar(4000) not null comment '定价计划参数的说明。',
    PRICING_PLAN_TYPE    varchar(3) not null comment '定价计划类型',
-   primary key (PRICING_PLAN_ID)
-);
+   primary key (PRICING_PLAN_ID));
 
 alter table USER_PRICING.PRICING_PLAN comment '定价计划是在产品成本、企业回报目的以及国家相关政策的基础上，结合企业市场营销计划而制定的针对产品/销售品的价格方案，它与';
 
@@ -3213,8 +4745,21 @@ create table USER_PRICING.PRICING_REF_OBJECT
 
 alter table USER_PRICING.PRICING_REF_OBJECT comment '在对产品/销售品进行定价的过程中所牵涉的对定价有影响的数据实体的相关参照属性，可以是（但不限于）产品、销售品、客户协议、';
 
+/*==============================================================*/
+/* Index: I_FKK_OWNER_20                                        */
+/*==============================================================*/
+create index I_FKK_OWNER_20 on USER_PRICING.PRICING_REF_OBJECT
+(
+   OWNER_ID
+);
 
-
+/*==============================================================*/
+/* Index: I_FKK_MEASURE_METHOD_232                              */
+/*==============================================================*/
+create index I_FKK_MEASURE_METHOD_232 on USER_PRICING.PRICING_REF_OBJECT
+(
+   MEASURE_METHOD_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_RULE                                          */
@@ -3232,11 +4777,41 @@ create table USER_PRICING.PRICING_RULE
 
 alter table USER_PRICING.PRICING_RULE comment '定价域中用于定义执行某种定价规则中所包含的条件。在定价段落中，引用定价判断条件来确定如何搜索资费标准或优惠计算。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_22                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_22 on USER_PRICING.PRICING_RULE
+(
+   PRICING_SECTION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_OPERATOR_23                                     */
+/*==============================================================*/
+create index I_FKK_OPERATOR_23 on USER_PRICING.PRICING_RULE
+(
+   OPERATOR_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_24                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_24 on USER_PRICING.PRICING_RULE
+(
+   PRICING_REF_OBJECT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_234                                   */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_234 on USER_PRICING.PRICING_RULE
+(
+   RESULT_REF_VALUE_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_SECTION                                       */
 /*==============================================================*/
-
 create table USER_PRICING.PRICING_SECTION
 (
    PRICING_SECTION_ID   numeric(9,0) not null comment '定价段落的标识',
@@ -3258,6 +4833,61 @@ create table USER_PRICING.PRICING_SECTION
 
 alter table USER_PRICING.PRICING_SECTION comment '在电信企业制定市场营销计划和运营支撑过程，确定一个特定计费帐务事件的定价因素很多，在定价域模型中通过定义一棵以定价过程为';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_19                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_19 on USER_PRICING.PRICING_SECTION
+(
+   PRICING_REF_OBJECT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_21                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_21 on USER_PRICING.PRICING_SECTION
+(
+   PARENT_SECTION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ZONE_ITEM_35                                    */
+/*==============================================================*/
+create index I_FKK_ZONE_ITEM_35 on USER_PRICING.PRICING_SECTION
+(
+   ZONE_ITEM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EVENT_PRICING_STRAT_196                         */
+/*==============================================================*/
+create index I_FKK_EVENT_PRICING_STRAT_196 on USER_PRICING.PRICING_SECTION
+(
+   EVENT_PRICING_STRATEGY_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_TYPE_200                        */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_TYPE_200 on USER_PRICING.PRICING_SECTION
+(
+   SECTION_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_228                                   */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_228 on USER_PRICING.PRICING_SECTION
+(
+   END_REF_VALUE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_229                                   */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_229 on USER_PRICING.PRICING_SECTION
+(
+   START_REF_VALUE_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_SECTION_RELATION                              */
@@ -3272,7 +4902,21 @@ create table USER_PRICING.PRICING_SECTION_RELATION
 
 alter table USER_PRICING.PRICING_SECTION_RELATION comment '定价段落关系用于描述定价段落之间的关系，如依赖关系、互斥关系等。定价段落关系与定价段落中的计算优先级共同决定当有多个段落';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_44                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_44 on USER_PRICING.PRICING_SECTION_RELATION
+(
+   A_SECTION_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_45                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_45 on USER_PRICING.PRICING_SECTION_RELATION
+(
+   Z_SECTION_ID
+);
 
 /*==============================================================*/
 /* Table: PRICING_SECTION_TYPE                                  */
@@ -3302,7 +4946,13 @@ create table PARTY_USER.PRIVILEGE
 
 alter table PARTY_USER.PRIVILEGE comment '权限是指电信内部参与人在电信业务活动中的可被赋予的最小权利单位。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_PRIVILEGE_189                                   */
+/*==============================================================*/
+create index I_FKK_PRIVILEGE_189 on PARTY_USER.PRIVILEGE
+(
+   PARENT_PRIVILEGEID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT                                               */
@@ -3327,6 +4977,31 @@ create table USER_PRODUCT.PRODUCT
 
 alter table USER_PRODUCT.PRODUCT comment '定义了有明确价格并能够被客户(Customer)购买/租赁的内容 ，分为主产品和附属产品';
 
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_FAMILY_257                              */
+/*==============================================================*/
+create index I_FKK_PRODUCT_FAMILY_257 on USER_PRODUCT.PRODUCT
+(
+   PRODUCT_FAMILY_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_PLAN_107                                */
+/*==============================================================*/
+create index I_FKK_PRICING_PLAN_107 on USER_PRODUCT.PRODUCT
+(
+   PRICING_PLAN_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_205                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_205 on USER_PRODUCT.PRODUCT
+(
+   PRODUCT_PROVIDER_ID
+);
+
 /*==============================================================*/
 /* Table: PRODUCT_ATTR                                          */
 /*==============================================================*/
@@ -3346,7 +5021,29 @@ create table USER_PRODUCT.PRODUCT_ATTR
 alter table USER_PRODUCT.PRODUCT_ATTR comment '产品属性（Product Attribute）定义了产品初基本信息外的动态信息，重点强调“动态”属性，所有可以动态配置的';
 
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_1                                       */
+/*==============================================================*/
+create index I_FKK_PRODUCT_1 on USER_PRODUCT.PRODUCT_ATTR
+(
+   PRODUCT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ATTR_VALUE_TYPE_210                             */
+/*==============================================================*/
+create index I_FKK_ATTR_VALUE_TYPE_210 on USER_PRODUCT.PRODUCT_ATTR
+(
+   ATTR_VALUE_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ATTR_VALUE_UNIT_212                             */
+/*==============================================================*/
+create index I_FKK_ATTR_VALUE_UNIT_212 on USER_PRODUCT.PRODUCT_ATTR
+(
+   ATTR_VALUE_UNIT_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_FAMILY                                        */
@@ -3384,6 +5081,21 @@ create table USER_PRODUCT.PRODUCT_OFFER
 alter table USER_PRODUCT.PRODUCT_OFFER comment '销售品(Product Offer) 业务实体域从市场销售的角度对产品/服务、定价方案的其中一项或者多项内容进行的重新包';
 
 
+/*==============================================================*/
+/* Index: I_FKK_BAND_254                                        */
+/*==============================================================*/
+create index I_FKK_BAND_254 on USER_PRODUCT.PRODUCT_OFFER
+(
+   BAND_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_PLAN_273                                */
+/*==============================================================*/
+create index I_FKK_PRICING_PLAN_273 on USER_PRODUCT.PRODUCT_OFFER
+(
+   PRICING_PLAN_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_ATTR                                    */
@@ -3407,7 +5119,29 @@ create table USER_PRODUCT.PRODUCT_OFFER_ATTR
 alter table USER_PRODUCT.PRODUCT_OFFER_ATTR comment '用于描述销售品的属性，销售品属性可以是销售品独立的属性，比如同类销售品的不同套餐类型，也可以是销售品包含的产品的属性，
 ';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_14                                */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_14 on USER_PRODUCT.PRODUCT_OFFER_ATTR
+(
+   OFFER_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ATTR_VALUE_TYPE_211                             */
+/*==============================================================*/
+create index I_FKK_ATTR_VALUE_TYPE_211 on USER_PRODUCT.PRODUCT_OFFER_ATTR
+(
+   ATTR_VALUE_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ATTR_VALUE_UNIT_213                             */
+/*==============================================================*/
+create index I_FKK_ATTR_VALUE_UNIT_213 on USER_PRODUCT.PRODUCT_OFFER_ATTR
+(
+   ATTR_VALUE_UNIT_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_INSTANCE                                */
@@ -3427,6 +5161,29 @@ create table USER_PRODUCT.PRODUCT_OFFER_INSTANCE
 
 alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE comment '客户可以通过一定的服务提供方式订购电信产品，使用的电信提供的业务，一旦产品，销售品被客户购买，一个销售品实例就形成了，也';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_272                               */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_272 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE
+(
+   OFFER_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CUST_197                                        */
+/*==============================================================*/
+create index I_FKK_CUST_197 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE
+(
+   CUST_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_198                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_198 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE
+(
+   CUST_AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_INSTANCE_ATTR                           */
@@ -3445,6 +5202,30 @@ create table USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR
 alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR comment '本实体描述了销售品实例的一些附加信息，便于描述销售品实例的一些个性化特征。';
 
 /*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_INSTA_214                         */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_INSTA_214 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR
+(
+   SERV_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_215                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_215 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR
+(
+   AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_ATTR_216                          */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_ATTR_216 on USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR
+(
+   ATTR_ID
+);
+
+/*==============================================================*/
 /* Table: PRODUCT_OFFER_OBJECT                                  */
 /*==============================================================*/
 create table USER_PRODUCT.PRODUCT_OFFER_OBJECT
@@ -3458,7 +5239,15 @@ create table USER_PRODUCT.PRODUCT_OFFER_OBJECT
    primary key (OFFER_OBJECT_ID)
 );
 
-alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT comment '销售品定价时有关的各种数据对象，可以是产品、销售品、客户、账户、帐本、累积量等';
+alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT comment '销售品定价时有关的各种数据对象，可以是产品、销售品、客户、账户、帐本、累积量等.';
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_252                               */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_252 on USER_PRODUCT.PRODUCT_OFFER_OBJECT
+(
+   OFFER_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_OBJECT_INSTANCE                         */
@@ -3478,7 +5267,21 @@ create table USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE
 
 alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE comment '销售品实例包含的对象实例';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_INSTA_259                         */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_INSTA_259 on USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE
+(
+   PRODUCT_OFFER_INSTANCE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_OBJECT_268                        */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_OBJECT_268 on USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE
+(
+   OFFER_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_PARAM                                   */
@@ -3496,7 +5299,13 @@ create table USER_PRODUCT.PRODUCT_OFFER_PARAM
 
 alter table USER_PRODUCT.PRODUCT_OFFER_PARAM comment '销售品定价时需要的定价参数。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_253                               */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_253 on USER_PRODUCT.PRODUCT_OFFER_PARAM
+(
+   OFFER_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_PARAM_INSTANCE                          */
@@ -3515,7 +5324,29 @@ create table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE
 
 alter table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE comment '销售品实例的参数取值';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_INSTA_260                         */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_INSTA_260 on USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE
+(
+   PRODUCT_OFFER_INSTANCE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_PARAM_269                         */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_PARAM_269 on USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE
+(
+   OFFER_PARAM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_LIFE_CYCLE_266                                  */
+/*==============================================================*/
+create index I_FKK_LIFE_CYCLE_266 on USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE
+(
+   LIFE_CYCLE_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_RELATION                                */
@@ -3535,6 +5366,21 @@ create table USER_PRODUCT.PRODUCT_OFFER_RELATION
 
 alter table USER_PRODUCT.PRODUCT_OFFER_RELATION comment '定义销售品间的关系';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_9                                 */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_9 on USER_PRODUCT.PRODUCT_OFFER_RELATION
+(
+   OFFER_A_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_10                                */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_10 on USER_PRODUCT.PRODUCT_OFFER_RELATION
+(
+   OFFER_Z_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_OFFER_RESTRICATION                            */
@@ -3551,6 +5397,21 @@ create table USER_PRODUCT.PRODUCT_OFFER_RESTRICATION
 
 alter table USER_PRODUCT.PRODUCT_OFFER_RESTRICATION comment '记录了销售品的限制条件，限制域类型属性体现销售品的不同类型的限制条件，如客户群，帐户群，地域，时间限制等';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_OFFER_12                                */
+/*==============================================================*/
+create index I_FKK_PRODUCT_OFFER_12 on USER_PRODUCT.PRODUCT_OFFER_RESTRICATION
+(
+   OFFER_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_MAKET_STRATEGY_13                               */
+/*==============================================================*/
+create index I_FKK_MAKET_STRATEGY_13 on USER_PRODUCT.PRODUCT_OFFER_RESTRICATION
+(
+   STRATEGY_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_RELATION                                      */
@@ -3571,6 +5432,47 @@ create table USER_PRODUCT.PRODUCT_RELATION
 
 alter table USER_PRODUCT.PRODUCT_RELATION comment '定义电信内部产品间的关系，以及电信产品和外部产品间的关系。';
 
+
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_2                                       */
+/*==============================================================*/
+create index I_FKK_PRODUCT_2 on USER_PRODUCT.PRODUCT_RELATION
+(
+   PROD_A_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EXTERNAL_PRODUCT_3                              */
+/*==============================================================*/
+create index I_FKK_EXTERNAL_PRODUCT_3 on USER_PRODUCT.PRODUCT_RELATION
+(
+   PROD_Z_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_RELATION_TYPE_4                         */
+/*==============================================================*/
+create index I_FKK_PRODUCT_RELATION_TYPE_4 on USER_PRODUCT.PRODUCT_RELATION
+(
+   RELATION_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_202                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_202 on USER_PRODUCT.PRODUCT_RELATION
+(
+   PROD_A_PROVIDER_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_204                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_204 on USER_PRODUCT.PRODUCT_RELATION
+(
+   PROD_Z_PROVIDER_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_RELATION_TYPE                                 */
@@ -3612,6 +5514,13 @@ create table USER_PRODUCT.PRODUCT_RESOURCE
 alter table USER_PRODUCT.PRODUCT_RESOURCE comment '产品资源描述业务占用电信的资源信息，这里我们只关心用户的接入终端，例如一部普通电话，一部小灵通电话。';
 
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_8                                       */
+/*==============================================================*/
+create index I_FKK_PRODUCT_8 on USER_PRODUCT.PRODUCT_RESOURCE
+(
+   PRODUCT_ID
+);
 
 /*==============================================================*/
 /* Table: PRODUCT_USAGE_EVENT_TYPE                              */
@@ -3627,6 +5536,21 @@ create table USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE
 
 alter table USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE comment '描述产品和计费事件类型之间的关联关系，计费事件由主产品产生，但是主产品和附属产品都可以关联计费事件类型，比如固定电话语音';
 
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_TYPE_322                             */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_TYPE_322 on USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE
+(
+   EVENT_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_5                                       */
+/*==============================================================*/
+create index I_FKK_PRODUCT_5 on USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE
+(
+   PRODUCT_ID
+);
 
 /*==============================================================*/
 /* Table: PROVIDED_CAPABILITY_INFO                              */
@@ -3666,7 +5590,13 @@ create table USER_ACCT.RATABLE_CYCLE
 
 alter table USER_ACCT.RATABLE_CYCLE comment '定义累计周期的具体周期信息';
 
-
+/*==============================================================*/
+/* Index: I_FKK_RATABLE_CYCLE_TYPE_299                          */
+/*==============================================================*/
+create index I_FKK_RATABLE_CYCLE_TYPE_299 on USER_ACCT.RATABLE_CYCLE
+(
+   RATABLE_CYCLE_TYPE_ID
+);
 
 /*==============================================================*/
 /* Table: RATABLE_CYCLE_TYPE                                    */
@@ -3700,10 +5630,18 @@ create table USER_PRICING.RATABLE_RESOURCE
 
 alter table USER_PRICING.RATABLE_RESOURCE comment '积量是计费帐务事件的一个累计型对象，可用于保留电信计费中需要跟踪的任何累计变量，如月免费分钟数、下载总字节数等，都可以作';
 
+/*==============================================================*/
+/* Index: I_FKK_TARIFF_UNIT_31                                  */
+/*==============================================================*/
+create index I_FKK_TARIFF_UNIT_31 on USER_PRICING.RATABLE_RESOURCE
+(
+   ORG_TARIFF_UNIT_ID
+);
 
 /*==============================================================*/
 /* Table: RATABLE_RESOURCE_ACCUMULATOR                          */
 /*==============================================================*/
+
 create table USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR
 (
    RATABLE_RESOURCE_ID  numeric(9,0) not null comment '唯一标识一种积量类型, 表示可以作为计费依据的标识，譬如时长、流量、余额、累计消费等。',
@@ -3716,7 +5654,21 @@ create table USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR
 
 alter table USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR comment '计费累计值（ratable resource accumulator）定义了计费处理过程中生成的可被单个计费事件使用的积';
 
+/*==============================================================*/
+/* Index: I_FKK_RATABLE_RESOURCE_236                            */
+/*==============================================================*/
+create index I_FKK_RATABLE_RESOURCE_236 on USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR
+(
+   RATABLE_RESOURCE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_RATABLE_CYCLE_298                               */
+/*==============================================================*/
+create index I_FKK_RATABLE_CYCLE_298 on USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR
+(
+   RATABLE_CYCLE_ID
+);
 
 /*==============================================================*/
 /* Table: RATED_EVENT                                           */
@@ -3734,8 +5686,41 @@ create table USER_EVENT.RATED_EVENT
 alter table USER_EVENT.RATED_EVENT comment '批价后计费事件（rated event）是在计费批价处理阶段，对预处理后事件（pre-processed event）进';
 
 /*==============================================================*/
+/* Index: I_FKK_EVENT_CONTENT_INDEX_304                         */
+/*==============================================================*/
+create index I_FKK_EVENT_CONTENT_INDEX_304 on USER_EVENT.RATED_EVENT
+(
+   EVENT_CONTENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_DEST_EVENT_TYPE_308                             */
+/*==============================================================*/
+create index I_FKK_DEST_EVENT_TYPE_308 on USER_EVENT.RATED_EVENT
+(
+   EVENT_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_310                                */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_310 on USER_EVENT.RATED_EVENT
+(
+   EVENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_323                                        */
+/*==============================================================*/
+create index I_FKK_SERV_323 on USER_EVENT.RATED_EVENT
+(
+   SERV_ID
+);
+
+/*==============================================================*/
 /* Table: REF_VALUE                                             */
 /*==============================================================*/
+
 create table USER_PRICING.REF_VALUE
 (
    REF_VALUE_ID         numeric(9,0) not null comment '参考值定义的标识',
@@ -3749,8 +5734,23 @@ create table USER_PRICING.REF_VALUE
    primary key (REF_VALUE_ID)
 );
 
-alter table USER_PRICING.REF_VALUE comment '用于确定进行资费计算或者优惠计算所涉及的具体参考值，它既可以是预先设定的固定值、参数，也可以是定价参考对象的取值';
+alter table USER_PRICING.REF_VALUE comment '用于确定进行资费计算或者优惠计算所涉及的具体参考值，它既可以是预先设定的固定值、参数，也可以是定价参考对象的取值。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_PARAM_DEFINE_233                        */
+/*==============================================================*/
+create index I_FKK_PRICING_PARAM_DEFINE_233 on USER_PRICING.REF_VALUE
+(
+   PRICING_PRARM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_235                          */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_235 on USER_PRICING.REF_VALUE
+(
+   PRICING_REF_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: REGION                                                */
@@ -3791,7 +5791,21 @@ create table PARTY_USER.ROLE_PRIVILEGE
 
 alter table PARTY_USER.ROLE_PRIVILEGE comment '定义权限组具体的权限。';
 
+/*==============================================================*/
+/* Index: I_FKK_PRIVILEGE_194                                   */
+/*==============================================================*/
+create index I_FKK_PRIVILEGE_194 on PARTY_USER.ROLE_PRIVILEGE
+(
+   PRIVILEGE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_ROLE_195                                        */
+/*==============================================================*/
+create index I_FKK_ROLE_195 on PARTY_USER.ROLE_PRIVILEGE
+(
+   ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: SC_INFO                                               */
@@ -3813,6 +5827,7 @@ alter table SC_INFO comment '描述业务控制器(Service Controller )的基本
 /*==============================================================*/
 /* Table: SERV                                                  */
 /*==============================================================*/
+
 create table USER_PRODUCT.SERV
 (
    SERV_ID              numeric(12,0) not null comment '主产品实例的唯一标识。',
@@ -3829,6 +5844,46 @@ create table USER_PRODUCT.SERV
    primary key (SERV_ID));
 
 alter table USER_PRODUCT.SERV comment '销售品实例在描述业务时都至少存在一个唯一的产品实例，可以用于识别该业务，具体表现为计费的唯一标识，产品实例拥有唯一的接入';
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_TYPE_249                          */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_TYPE_249 on USER_PRODUCT.SERV
+(
+   BILLING_CYCLE_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_FAMILY_261                              */
+/*==============================================================*/
+create index I_FKK_PRODUCT_FAMILY_261 on USER_PRODUCT.SERV
+(
+   PRODUCT_FAMILY_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_153                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_153 on USER_PRODUCT.SERV
+(
+   AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_156                                     */
+/*==============================================================*/
+create index I_FKK_PRODUCT_156 on USER_PRODUCT.SERV
+(
+   PRODUCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_CUST_157                                        */
+/*==============================================================*/
+create index I_FKK_CUST_157 on USER_PRODUCT.SERV
+(
+   CUST_ID
+);
 
 /*==============================================================*/
 /* Table: SERVICE_OFFER                                         */
@@ -3850,6 +5905,21 @@ create table USER_PRODUCT.SERVICE_OFFER
 
 alter table USER_PRODUCT.SERVICE_OFFER comment '描述通过向客户提供一些手续和体力工作，完成电信产品实例化的手段。比如提供给客户的一些手续和体力工作，服务提供分为两类：其';
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_7                                       */
+/*==============================================================*/
+create index I_FKK_PRODUCT_7 on USER_PRODUCT.SERVICE_OFFER
+(
+   PRODUCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACTION_11                                       */
+/*==============================================================*/
+create index I_FKK_ACTION_11 on USER_PRODUCT.SERVICE_OFFER
+(
+   ACTION_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_ACCT                                             */
@@ -3874,6 +5944,37 @@ create table USER_ACCT.SERV_ACCT
 
 alter table USER_ACCT.SERV_ACCT comment '定义每个产品实例的每类帐目由哪个帐户支付、对帐单的要求以及所属的支付规则的关系。';
 
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_GROUP_56                              */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_GROUP_56 on USER_ACCT.SERV_ACCT
+(
+   ACCT_ITEM_GROUP_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_77                                         */
+/*==============================================================*/
+create index I_FKK_ACCT_77 on USER_ACCT.SERV_ACCT
+(
+   ACCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PAYMENT_RULE_78                                 */
+/*==============================================================*/
+create index I_FKK_PAYMENT_RULE_78 on USER_ACCT.SERV_ACCT
+(
+   PAYMENT_RULE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_118                                        */
+/*==============================================================*/
+create index I_FKK_SERV_118 on USER_ACCT.SERV_ACCT
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_ADD_ACC_NBR                                      */
@@ -3892,7 +5993,13 @@ create table USER_PRODUCT.SERV_ADD_ACC_NBR
 
 alter table USER_PRODUCT.SERV_ADD_ACC_NBR comment '用于支持一机多号';
 
-
+/*==============================================================*/
+/* Index: I_FKK_SERV_IDENTIFICATION_174                         */
+/*==============================================================*/
+create index I_FKK_SERV_IDENTIFICATION_174 on USER_PRODUCT.SERV_ADD_ACC_NBR
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_ATTR                                             */
@@ -3910,7 +6017,29 @@ create table USER_PRODUCT.SERV_ATTR
 
 alter table USER_PRODUCT.SERV_ATTR comment '描述了产品实例的一些附加信息，如adsl速率。产品的动态属性通过名/值对应方式在产品属性表描述，对应着产品实例后，都要记';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_94                                         */
+/*==============================================================*/
+create index I_FKK_SERV_94 on USER_PRODUCT.SERV_ATTR
+(
+   SERV_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_159                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_159 on USER_PRODUCT.SERV_ATTR
+(
+   AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_ATTR_165                                */
+/*==============================================================*/
+create index I_FKK_PRODUCT_ATTR_165 on USER_PRODUCT.SERV_ATTR
+(
+   ATTR_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_AUTH                                             */
@@ -3939,6 +6068,13 @@ create table USER_PRODUCT.SERV_BILLING_MODE
 
 alter table USER_PRODUCT.SERV_BILLING_MODE comment '用于区分主产品实例的付费模式，主要是后付费方式、预付费方式等，以便于实现预付费、后付费融合和灵活切换。';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_251                                        */
+/*==============================================================*/
+create index I_FKK_SERV_251 on USER_PRODUCT.SERV_BILLING_MODE
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_IDENTIFICATION                                   */
@@ -3955,7 +6091,21 @@ create table USER_PRODUCT.SERV_IDENTIFICATION
 
 alter table USER_PRODUCT.SERV_IDENTIFICATION comment '描述了产品实例所对应的产品的业务号码。';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_92                                         */
+/*==============================================================*/
+create index I_FKK_SERV_92 on USER_PRODUCT.SERV_IDENTIFICATION
+(
+   SERV_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_160                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_160 on USER_PRODUCT.SERV_IDENTIFICATION
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_LOCATION                                         */
@@ -3974,6 +6124,54 @@ create table USER_PRODUCT.SERV_LOCATION
 );
 
 alter table USER_PRODUCT.SERV_LOCATION comment '本实体描述了产品实例所对应产品的安装地址信息。';
+
+/*==============================================================*/
+/* Index: I_FKK_STAT_REGION_340                                 */
+/*==============================================================*/
+create index I_FKK_STAT_REGION_340 on USER_PRODUCT.SERV_LOCATION
+(
+   STAT_REGION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ORGANIZATION_341                                */
+/*==============================================================*/
+create index I_FKK_ORGANIZATION_341 on USER_PRODUCT.SERV_LOCATION
+(
+   BUREAU_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SERV_91                                         */
+/*==============================================================*/
+create index I_FKK_SERV_91 on USER_PRODUCT.SERV_LOCATION
+(
+   SERV_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ADDRESS_112                                     */
+/*==============================================================*/
+create index I_FKK_ADDRESS_112 on USER_PRODUCT.SERV_LOCATION
+(
+   ADDRESS_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_113                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_113 on USER_PRODUCT.SERV_LOCATION
+(
+   EXCHANGE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_162                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_162 on USER_PRODUCT.SERV_LOCATION
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_POINTS_REWARD_RECORD                             */
@@ -4001,6 +6199,21 @@ create table PARTY_USER.SERV_POINTS_REWARD_RECORD
 
 alter table PARTY_USER.SERV_POINTS_REWARD_RECORD comment '记录每次积分兑换信息。';
 
+/*==============================================================*/
+/* Index: I_FKK_INTEGRAL_RESULT_279                             */
+/*==============================================================*/
+create index I_FKK_INTEGRAL_RESULT_279 on PARTY_USER.SERV_POINTS_REWARD_RECORD
+(
+   INTEGRAL_REAULT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRESENT_281                                     */
+/*==============================================================*/
+create index I_FKK_PRESENT_281 on PARTY_USER.SERV_POINTS_REWARD_RECORD
+(
+   PRESENT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_POINTS_REWARD_RULE                               */
@@ -4021,6 +6234,13 @@ create table PARTY_USER.SERV_POINTS_REWARD_RULE
 
 alter table PARTY_USER.SERV_POINTS_REWARD_RULE comment '描述积分的回报规则';
 
+/*==============================================================*/
+/* Index: I_FKK_PRESENT_282                                     */
+/*==============================================================*/
+create index I_FKK_PRESENT_282 on PARTY_USER.SERV_POINTS_REWARD_RULE
+(
+   PRESENT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_PRODUCT                                          */
@@ -4039,6 +6259,29 @@ create table USER_PRODUCT.SERV_PRODUCT
 
 alter table USER_PRODUCT.SERV_PRODUCT comment '描述了主产品实例具有的附加的产品实例。';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_90                                         */
+/*==============================================================*/
+create index I_FKK_SERV_90 on USER_PRODUCT.SERV_PRODUCT
+(
+   SERV_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_158                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_158 on USER_PRODUCT.SERV_PRODUCT
+(
+   AGREEMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_163                                     */
+/*==============================================================*/
+create index I_FKK_PRODUCT_163 on USER_PRODUCT.SERV_PRODUCT
+(
+   PRODUCT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_PRODUCT_ATTR                                     */
@@ -4056,6 +6299,21 @@ create table USER_PRODUCT.SERV_PRODUCT_ATTR
 alter table USER_PRODUCT.SERV_PRODUCT_ATTR comment '描述了附加产品实例所附带的属性的信息。
 附属产品实例属性中包含了付费模式信息，以指明本附属产品实例约定的付费';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_PRODUCT_89                                 */
+/*==============================================================*/
+create index I_FKK_SERV_PRODUCT_89 on USER_PRODUCT.SERV_PRODUCT_ATTR
+(
+   SERV_PRODUCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_ATTR_164                                */
+/*==============================================================*/
+create index I_FKK_PRODUCT_ATTR_164 on USER_PRODUCT.SERV_PRODUCT_ATTR
+(
+   ATTR_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_RELATION                                         */
@@ -4073,7 +6331,21 @@ create table USER_PRODUCT.SERV_RELATION
 
 alter table USER_PRODUCT.SERV_RELATION comment '描述由客户定制的主产品实例之间的关系，如为另外一个主产品实例提供停机担保的关系。';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_95                                         */
+/*==============================================================*/
+create index I_FKK_SERV_95 on USER_PRODUCT.SERV_RELATION
+(
+   SERV_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_163                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_163 on USER_PRODUCT.SERV_RELATION
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_STATE_ATTR                                       */
@@ -4090,9 +6362,24 @@ create table USER_PRODUCT.SERV_STATE_ATTR
    primary key (SERV_ID, BILLING_CYCLE_TYPE_ID, AGREEMENT_ID)
 );
 
-alter table USER_PRODUCT.SERV_STATE_ATTR comment '表达主产品实例状态及其历史变化情况的辅助表。';
+alter table USER_PRODUCT.SERV_STATE_ATTR comment '表达主产品实例状态及其历史变化情况的辅助表。
+';
 
+/*==============================================================*/
+/* Index: I_FKK_OWE_BUSINESS_TYPE_238                           */
+/*==============================================================*/
+create index I_FKK_OWE_BUSINESS_TYPE_238 on USER_PRODUCT.SERV_STATE_ATTR
+(
+   OWE_BUSINESS_TYPE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_225                                        */
+/*==============================================================*/
+create index I_FKK_SERV_225 on USER_PRODUCT.SERV_STATE_ATTR
+(
+   SERV_ID
+);
 
 /*==============================================================*/
 /* Table: SERV_SUBSRIBER                                        */
@@ -4107,9 +6394,24 @@ create table USER_PRODUCT.SERV_SUBSRIBER
    primary key (SERV_ID, AGREEMENT_ID)
 );
 
-alter table USER_PRODUCT.SERV_SUBSRIBER comment '描述了产品实例所对应的具体的产品使用者的属性。';
+alter table USER_PRODUCT.SERV_SUBSRIBER comment '描述了产品实例所对应的具体的产品使用者的属性。
+';
 
+/*==============================================================*/
+/* Index: I_FKK_SERV_93                                         */
+/*==============================================================*/
+create index I_FKK_SERV_93 on USER_PRODUCT.SERV_SUBSRIBER
+(
+   SERV_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_AGREEMENT_161                                   */
+/*==============================================================*/
+create index I_FKK_AGREEMENT_161 on USER_PRODUCT.SERV_SUBSRIBER
+(
+   AGREEMENT_ID
+);
 
 /*==============================================================*/
 /* Table: SETTLE_CATALOG                                        */
@@ -4125,6 +6427,13 @@ create table USER_ACCT.SETTLE_CATALOG
 
 alter table USER_ACCT.SETTLE_CATALOG comment '结算目录';
 
+/*==============================================================*/
+/* Index: I_FKK_PARTNER_342                                     */
+/*==============================================================*/
+create index I_FKK_PARTNER_342 on USER_ACCT.SETTLE_CATALOG
+(
+   CATALOG_ID
+);
 
 /*==============================================================*/
 /* Table: SETTLE_CATALOG_ITEM                                   */
@@ -4142,6 +6451,13 @@ create table USER_ACCT.SETTLE_CATALOG_ITEM
 
 alter table USER_ACCT.SETTLE_CATALOG_ITEM comment '结算目录节点';
 
+/*==============================================================*/
+/* Index: I_FKK_SETTLE_CATALOG_343                              */
+/*==============================================================*/
+create index I_FKK_SETTLE_CATALOG_343 on USER_ACCT.SETTLE_CATALOG_ITEM
+(
+   CATALOG_ID
+);
 
 /*==============================================================*/
 /* Table: SETTLE_CATALOG_ITEM_ELEMENT                           */
@@ -4157,6 +6473,22 @@ create table USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT
 alter table USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT comment '目录节点所包含的元素。 ';
 
 /*==============================================================*/
+/* Index: I_FKK_SETTLE_CATALOG_ITEM_344                         */
+/*==============================================================*/
+create index I_FKK_SETTLE_CATALOG_ITEM_344 on USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT
+(
+   CATALOG_ITEM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SETTLE_RULE_345                                 */
+/*==============================================================*/
+create index I_FKK_SETTLE_RULE_345 on USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT
+(
+   ELEMENT_ID
+);
+
+/*==============================================================*/
 /* Table: SETTLE_RULE                                           */
 /*==============================================================*/
 create table USER_ACCT.SETTLE_RULE
@@ -4170,7 +6502,13 @@ create table USER_ACCT.SETTLE_RULE
 
 alter table USER_ACCT.SETTLE_RULE comment '结算规则';
 
-
+/*==============================================================*/
+/* Index: I_FKK_EVENT_PRICING_STRAT_346                         */
+/*==============================================================*/
+create index I_FKK_EVENT_PRICING_STRAT_346 on USER_ACCT.SETTLE_RULE
+(
+   EVENT_PRICING_STRATEGY_ID
+);
 
 /*==============================================================*/
 /* Table: SHARE_RULE_TYPE                                       */
@@ -4197,6 +6535,18 @@ create table USER_EVENT.SOURCE_EVENT
 
 alter table USER_EVENT.SOURCE_EVENT comment '源事件（source_event）是计费系统计费处理的源数据信息，主要包含三个大类内容：1）客户交互事件；2）使用记录；';
 
+/*==============================================================*/
+/* Index: I_FKK_EVENT_CONTENT_INDEX_306                         */
+/*==============================================================*/
+create index I_FKK_EVENT_CONTENT_INDEX_306 on USER_EVENT.SOURCE_EVENT
+(
+   EVENT_CONTENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_TYPE_316                           */
+/*==============================================================*/
+
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_FORMAT                                   */
@@ -4215,7 +6565,13 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT
 
 alter table USER_EVENT.SOURCE_EVENT_FORMAT comment '可预定义和扩展的源事件的格式信息。源事件格式包含数据包格式、记录格式等，同时定义了源事件的存储方式，如：数据流、文件、库';
 
-
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_TYPE_320                           */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_TYPE_320 on USER_EVENT.SOURCE_EVENT_FORMAT
+(
+   SOURCE_EVENT_TYPE
+);
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_FORMAT_ITEM                              */
@@ -4239,7 +6595,29 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT_ITEM
 alter table USER_EVENT.SOURCE_EVENT_FORMAT_ITEM comment '定义了构成源事件格式项的源事件属性在源事件格式段中的位置、长度、编码方式（ASCII、BCD、二进制等）等相关信息。
                                                         ';
 
+/*==============================================================*/
+/* Index: I_FKK_DATA_FORMAT_301                                 */
+/*==============================================================*/
+create index I_FKK_DATA_FORMAT_301 on USER_EVENT.SOURCE_EVENT_FORMAT_ITEM
+(
+   DATA_FORMAT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_FORMAT_314                         */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_FORMAT_314 on USER_EVENT.SOURCE_EVENT_FORMAT_ITEM
+(
+   EVENT_FORMAT_SEGMENT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EVENT_ATTR_315                                  */
+/*==============================================================*/
+create index I_FKK_EVENT_ATTR_315 on USER_EVENT.SOURCE_EVENT_FORMAT_ITEM
+(
+   EVENT_ATTR_ID
+);
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_FORMAT_NORMAL                            */
@@ -4256,6 +6634,13 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT_NORMAL
 
 alter table USER_EVENT.SOURCE_EVENT_FORMAT_NORMAL comment '可预定义和扩展的普通源事件的格式信息。源事件格式包含数据包格式、记录格式等，源事件格式由源事件格式段（event for';
 
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_FORMAT_317                         */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_FORMAT_317 on USER_EVENT.SOURCE_EVENT_FORMAT_NORMAL
+(
+   EVENT_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_FORMAT_OTHER                             */
@@ -4269,7 +6654,13 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT_OTHER
 
 alter table USER_EVENT.SOURCE_EVENT_FORMAT_OTHER comment '定义其它无法在普通源事件格式中表示的格式，为源事件格式的扩展留下空间。';
 
-
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_FORMAT_318                         */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_FORMAT_318 on USER_EVENT.SOURCE_EVENT_FORMAT_OTHER
+(
+   EVENT_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_FORMAT_SEGMENT                           */
@@ -4281,7 +6672,7 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT
    SEGMENT_TYPE         varchar(3) not null comment '标识源事件格式段的类型：包头、包尾、内容，对数据包类型的源事件，可包含上述三个部分的内容，对记录类型的源事件，格式段类型可只为"内容"。',
    LENGTH               numeric(8,0) not null comment '格式段的长度',
    COLUMN_NUM           numeric(8,0) not null comment '格式段包含的列数',
-   _SEPARATOR          varchar(30) not null comment '分隔符',
+   `SEPARATOR`          varchar(30) not null comment '分隔符',
    TERMINATOR           varchar(30) not null comment '结束符',
    NAME                 varchar(50) not null comment '名称',
    primary key (EVENT_FORMAT_SEGMENT_ID)
@@ -4289,6 +6680,13 @@ create table USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT
 
 alter table USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT comment '定义了针对不同源事件格式类型（如：数据包、记录类型）可能拥有的包头、包尾、内容等格式段信息，包括长度、列数、分隔符、结束';
 
+/*==============================================================*/
+/* Index: I_FKK_SOURCE_EVENT_FORMAT_319                         */
+/*==============================================================*/
+create index I_FKK_SOURCE_EVENT_FORMAT_319 on USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT
+(
+   EVENT_FORMAT_ID
+);
 
 /*==============================================================*/
 /* Table: SOURCE_EVENT_TYPE                                     */
@@ -4323,6 +6721,21 @@ create table USER_LOCATION.SPECIAL_HEAD
 
 alter table USER_LOCATION.SPECIAL_HEAD comment '特殊号头信息';
 
+/*==============================================================*/
+/* Index: I_FKK_BILLING_REGION_324                              */
+/*==============================================================*/
+create index I_FKK_BILLING_REGION_324 on USER_LOCATION.SPECIAL_HEAD
+(
+   LATN_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_EMULATORY_PARTNER_331                           */
+/*==============================================================*/
+create index I_FKK_EMULATORY_PARTNER_331 on USER_LOCATION.SPECIAL_HEAD
+(
+   EMULATORY_PARTNER_ID
+);
 
 /*==============================================================*/
 /* Table: SPECIAL_PAYMENT                                       */
@@ -4337,8 +6750,37 @@ create table USER_ACCT.SPECIAL_PAYMENT
 
 alter table USER_ACCT.SPECIAL_PAYMENT comment '记录专款专用的具体详细定义。';
 
+/*==============================================================*/
+/* Index: I_FKK_SPECIAL_PAYMENT_DESC_80                         */
+/*==============================================================*/
+create index I_FKK_SPECIAL_PAYMENT_DESC_80 on USER_ACCT.SPECIAL_PAYMENT
+(
+   SPE_PAYMENT_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PARTNER_138                                     */
+/*==============================================================*/
+create index I_FKK_PARTNER_138 on USER_ACCT.SPECIAL_PAYMENT
+(
+   PARTNER_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_139                                     */
+/*==============================================================*/
+create index I_FKK_PRODUCT_139 on USER_ACCT.SPECIAL_PAYMENT
+(
+   PRODUCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_GROUP_297                             */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_GROUP_297 on USER_ACCT.SPECIAL_PAYMENT
+(
+   ACCT_ITEM_GROUP_ID
+);
 
 /*==============================================================*/
 /* Table: SPECIAL_PAYMENT_DESC                                  */
@@ -4367,7 +6809,32 @@ create table PARTY_USER.STAFF
    primary key (STAFF_ID)
 );
 
-alter table PARTY_USER.STAFF comment '员工与管理者是中国电信企业内部的参与人在电信业务活动中承担的角色，他们在电信业务活动中具有相关的权限。';
+alter table PARTY_USER.STAFF comment '员工与管理者是中国电信企业内部的参与人在电信业务活动中承担的角色，他们在电信业务活动中具有相关的权限。
+员工';
+
+/*==============================================================*/
+/* Index: I_FKK_ORGANIZATION_250                                */
+/*==============================================================*/
+create index I_FKK_ORGANIZATION_250 on PARTY_USER.STAFF
+(
+   OPERATE_ORG_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_STAFF_103                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_103 on PARTY_USER.STAFF
+(
+   PARENT_PARTYROLEID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PARTY_ROLE_184                                  */
+/*==============================================================*/
+create index I_FKK_PARTY_ROLE_184 on PARTY_USER.STAFF
+(
+   STAFF_ID
+);
 
 /*==============================================================*/
 /* Table: STAFF_PRIVILEGE                                       */
@@ -4381,6 +6848,21 @@ create table PARTY_USER.STAFF_PRIVILEGE
 
 alter table PARTY_USER.STAFF_PRIVILEGE comment '定义员工享受的权限';
 
+/*==============================================================*/
+/* Index: I_FKK_STAFF_192                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_192 on PARTY_USER.STAFF_PRIVILEGE
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRIVILEGE_193                                   */
+/*==============================================================*/
+create index I_FKK_PRIVILEGE_193 on PARTY_USER.STAFF_PRIVILEGE
+(
+   PRIVILEGE_ID
+);
 
 /*==============================================================*/
 /* Table: STAFF_ROLE                                            */
@@ -4394,6 +6876,21 @@ create table PARTY_USER.STAFF_ROLE
 
 alter table PARTY_USER.STAFF_ROLE comment '员工享受的权限组';
 
+/*==============================================================*/
+/* Index: I_FKK_STAFF_190                                       */
+/*==============================================================*/
+create index I_FKK_STAFF_190 on PARTY_USER.STAFF_ROLE
+(
+   PARTY_ROLE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ROLE_191                                        */
+/*==============================================================*/
+create index I_FKK_ROLE_191 on PARTY_USER.STAFF_ROLE
+(
+   ROLE_ID
+);
 
 /*==============================================================*/
 /* Table: STATS_CHECK2                                          */
@@ -4417,7 +6914,21 @@ create table USER_STAT.STATS_CHECK2
 
 alter table USER_STAT.STATS_CHECK2 comment '三棵树稽核关系定义';
 
+/*==============================================================*/
+/* Index: I_FKK_INTERNAL_TREE_STRUCT_358                        */
+/*==============================================================*/
+create index I_FKK_INTERNAL_TREE_STRUCT_358 on USER_STAT.STATS_CHECK2
+(
+   TREE_NODE_ID
+);
 
+/*==============================================================*/
+/* Index: I_FKK_EXTERNAL_TREE_STRUCT_358                        */
+/*==============================================================*/
+create index I_FKK_EXTERNAL_TREE_STRUCT_358 on USER_STAT.STATS_CHECK2
+(
+   TREE_NODE_ID
+);
 
 /*==============================================================*/
 /* Table: STAT_REGION                                           */
@@ -4432,6 +6943,21 @@ create table USER_LOCATION.STAT_REGION
 
 alter table USER_LOCATION.STAT_REGION comment '电信营销区域是中国电信根据电信营销管理需要而进行区域划分各种划分范围，包括地市、片区/社区/服务区等';
 
+/*==============================================================*/
+/* Index: I_FKK_STAT_REGION_327                                 */
+/*==============================================================*/
+create index I_FKK_STAT_REGION_327 on USER_LOCATION.STAT_REGION
+(
+   PARENT_REGION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REGION_336                                      */
+/*==============================================================*/
+create index I_FKK_REGION_336 on USER_LOCATION.STAT_REGION
+(
+   REGION_ID
+);
 
 /*==============================================================*/
 /* Table: STA_TARGET_SYNTAX2                                    */
@@ -4444,6 +6970,13 @@ create table USER_STAT.STA_TARGET_SYNTAX2
 
 alter table USER_STAT.STA_TARGET_SYNTAX2 comment '定义游离指标及取值语法';
 
+/*==============================================================*/
+/* Index: I_FKK_EXTERNAL_TREE_STRUCT_355                        */
+/*==============================================================*/
+create index I_FKK_EXTERNAL_TREE_STRUCT_355 on USER_STAT.STA_TARGET_SYNTAX2
+(
+   EXTERNAL_TREE_NODE_ID
+);
 
 /*==============================================================*/
 /* Table: SUB_BILLING_CYCLE                                     */
@@ -4456,12 +6989,17 @@ create table USER_ACCT.SUB_BILLING_CYCLE
    SUB_BILLING_CYCLE_DESC varchar(250) not null comment '子周期的用途说明。',
    EFF_DATE             datetime not null comment '子周期的开始日期',
    EXP_DATE             datetime comment '子周期的截止日期',
-   primary key (SUB_BILLING_CYCLE_ID)
-   );
+   primary key (SUB_BILLING_CYCLE_ID));
 
-alter table USER_ACCT.SUB_BILLING_CYCLE comment '定义当前主周期下存在不同起止时间和用途等的子周期,比如与主周期时间起止不同的当前统计周期;';
+alter table USER_ACCT.SUB_BILLING_CYCLE comment '定义当前主周期下存在不同起止时间和用途等的子周期,比如与主周期时间起止不同的当前统计周期';
 
-
+/*==============================================================*/
+/* Index: I_FKK_BILLING_CYCLE_114                               */
+/*==============================================================*/
+create index I_FKK_BILLING_CYCLE_114 on USER_ACCT.SUB_BILLING_CYCLE
+(
+   BILLING_CYCLE_ID
+);
 
 /*==============================================================*/
 /* Table: TARGET_TREE2                                          */
@@ -4515,6 +7053,78 @@ create table USER_PRICING.TARIFF
 alter table USER_PRICING.TARIFF comment '定义了对客户所使用的产品进行计费的基本费用信息，资费标准可分为一次性费用、周期性费用和使用费三种类型。';
 
 /*==============================================================*/
+/* Index: I_FKK_TARIFF_CALC_DESC_15                             */
+/*==============================================================*/
+create index I_FKK_TARIFF_CALC_DESC_15 on USER_PRICING.TARIFF
+(
+   CALC_METHOD_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_TARIFF_UNIT_16                                  */
+/*==============================================================*/
+create index I_FKK_TARIFF_UNIT_16 on USER_PRICING.TARIFF
+(
+   TARIFF_UNIT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_RATABLE_RESOURCE_17                             */
+/*==============================================================*/
+create index I_FKK_RATABLE_RESOURCE_17 on USER_PRICING.TARIFF
+(
+   RESOURCE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRICING_SECTION_18                              */
+/*==============================================================*/
+create index I_FKK_PRICING_SECTION_18 on USER_PRICING.TARIFF
+(
+   PRICING_SECTION_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_39                                    */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_39 on USER_PRICING.TARIFF
+(
+   FIXED_RATE_VALUE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_REF_VALUE_40                                    */
+/*==============================================================*/
+create index I_FKK_REF_VALUE_40 on USER_PRICING.TARIFF
+(
+   SCALED_RATE_VALUE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_PRODUCT_116                                     */
+/*==============================================================*/
+create index I_FKK_PRODUCT_116 on USER_PRICING.TARIFF
+(
+   SUB_PRODUCT_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACCT_ITEM_TYPE_117                              */
+/*==============================================================*/
+create index I_FKK_ACCT_ITEM_TYPE_117 on USER_PRICING.TARIFF
+(
+   ACCT_ITEM_TYPE_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ACTION_175                                      */
+/*==============================================================*/
+create index I_FKK_ACTION_175 on USER_PRICING.TARIFF
+(
+   ACTION_ID
+);
+
+/*==============================================================*/
 /* Table: TARIFF_CALC_DESC                                      */
 /*==============================================================*/
 create table USER_PRICING.TARIFF_CALC_DESC
@@ -4540,6 +7150,13 @@ create table USER_PRICING.TARIFF_UNIT
 
 alter table USER_PRICING.TARIFF_UNIT comment '表达了一个资费标准依靠何种单位进行度量和计算费用。该表用于记录模型所支持的各种资费单位。如分钟数,流量M数,秒数等。';
 
+/*==============================================================*/
+/* Index: I_FKK_MEASURE_METHOD_41                               */
+/*==============================================================*/
+create index I_FKK_MEASURE_METHOD_41 on USER_PRICING.TARIFF_UNIT
+(
+   MEASURE_METHOD_ID
+);
 
 /*==============================================================*/
 /* Table: TIME_PERIOD                                           */
@@ -4663,6 +7280,13 @@ create table USER_PRICING.ZONE
 
 alter table USER_PRICING.ZONE comment '区表用于表达一组互相管理的数据，用于把事件的属性值划分成易于管理的类别。如被叫地区、时区、传真分区、Qos分区等都可以做';
 
+/*==============================================================*/
+/* Index: I_FKK_PRICING_REF_OBJECT_54                           */
+/*==============================================================*/
+create index I_FKK_PRICING_REF_OBJECT_54 on USER_PRICING.ZONE
+(
+   PRICING_REF_OBJECT_ID
+);
 
 /*==============================================================*/
 /* Table: ZONE_ITEM                                             */
@@ -4678,6 +7302,21 @@ create table USER_PRICING.ZONE_ITEM
 
 alter table USER_PRICING.ZONE_ITEM comment '一个区表可包含多个分区，也可以是个树状的层次分区，区表节点是区表中的一个组成元素。';
 
+/*==============================================================*/
+/* Index: I_FKK_ZONE_ITEM_32                                    */
+/*==============================================================*/
+create index I_FKK_ZONE_ITEM_32 on USER_PRICING.ZONE_ITEM
+(
+   PARENT_ZONE_ITEM_ID
+);
+
+/*==============================================================*/
+/* Index: I_FKK_ZONE_33                                         */
+/*==============================================================*/
+create index I_FKK_ZONE_33 on USER_PRICING.ZONE_ITEM
+(
+   ZONE_ID
+);
 
 /*==============================================================*/
 /* Table: ZONE_ITEM_VALUE                                       */
@@ -4694,4 +7333,1226 @@ create table USER_PRICING.ZONE_ITEM_VALUE
 );
 
 alter table USER_PRICING.ZONE_ITEM_VALUE comment '定义在最底层的区表节点上所包含的一组有实际代表意义的数值，如电话号码（区号），IP地址（前缀）等。';
+
+/*==============================================================*/
+/* Index: I_FKK_ZONE_ITEM_34                                    */
+/*==============================================================*/
+create index I_FKK_ZONE_ITEM_34 on USER_PRICING.ZONE_ITEM_VALUE
+(
+   ZONE_ITEM_ID
+);
+
+alter table ACCESSED_CAPABILITY_INFO add constraint FK_Reference_371 foreign key (CAPABILITY_ID)
+      references CAPABILITY_INFO (CAPABILITY_ID) on delete restrict on update restrict;
+
+alter table ACCESSED_CAPABILITY_INFO add constraint FK_Reference_372 foreign key (NODE_ID)
+      references NODE_INFO (NODE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT add constraint FKK_CUST_152 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_BALANCE add constraint FKK_BALANCE_TYPE_83 foreign key (BALANCE_TYPE_ID)
+      references USER_ACCT.BALANCE_TYPE (BALANCE_TYPE_ID) on delete restrict on update restrict;
+
+
+alter table USER_ACCT.ACCT_BALANCE_LOG add constraint FKK_ACCT_BALANCE_241 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_BALANCE_LOG add constraint FKK_BALANCE_PAYOUT_240 foreign key (OPER_PAYOUT_ID)
+      references USER_ACCT.BALANCE_PAYOUT (OPER_PAYOUT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_BALANCE_LOG add constraint FKK_BALANCE_SOURCE_242 foreign key (OPER_INCOME_ID)
+      references USER_ACCT.BALANCE_SOURCE (OPER_INCOME_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_BALANCE_LOG add constraint FKK_BILLING_CYCLE_245 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_CREDIT add constraint FKK_ACCT_106 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_ACCT_154 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_ACCT_ITEM_SOURCE_67 foreign key (ITEM_SOURCE_ID)
+      references USER_ACCT.ACCT_ITEM_SOURCE (ITEM_SOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_ACCT_ITEM_TYPE_61 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_BILLING_CYCLE_72 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_BILLING_REGION_347 foreign key (LATN_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_BILL_63 foreign key (BILL_ID)
+      references USER_ACCT.BILL (BILL_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_PAYMENT_METHOD_206 foreign key (PAYMENT_METHOD)
+      references USER_ACCT.PAYMENT_METHOD (PAYMENT_METHOD) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM add constraint FKK_SERV_155 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_ADJUSTED add constraint FKK_ACCT_ITEM_134 foreign key (ADJUST_ACCT_ITEM_ID)
+      references USER_ACCT.ACCT_ITEM (ACCT_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_ADJUSTED add constraint FKK_ACCT_ITEM_135 foreign key (ACCT_ITEM_ID)
+      references USER_ACCT.ACCT_ITEM (ACCT_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_GROUP_MEMBER add constraint FKK_ACCT_ITEM_GROUP_58 foreign key (ACCT_ITEM_GROUP_ID)
+      references USER_ACCT.ACCT_ITEM_GROUP (ACCT_ITEM_GROUP_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_GROUP_MEMBER add constraint FKK_ACCT_ITEM_SOURCE_66 foreign key (ITEM_SOURCE_ID)
+      references USER_ACCT.ACCT_ITEM_SOURCE (ITEM_SOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_GROUP_MEMBER add constraint FKK_ACCT_ITEM_TYPE_65 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_SOURCE add constraint FKK_ACCT_ITEM_TYPE_70 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_TYPE add constraint FKK_ACCT_ITEM_CLASS_64 foreign key (ACCT_ITEM_CLASS_ID)
+      references USER_ACCT.ACCT_ITEM_CLASS (ACCT_ITEM_CLASS_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_ITEM_TYPE add constraint FKK_EMULATORY_PARTNER_199 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.EMULATORY_PARTNER (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_RELATIONSHIP add constraint FKK_ACCT_141 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.ACCT_RELATIONSHIP add constraint FKK_ACCT_142 foreign key (REL_ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.ACTION add constraint FKK_ACTION_TYPE_201 foreign key (ACTION_TYPE_ID)
+      references USER_PRODUCT.ACTION_TYPE (ACTION_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.AGGREGATE_OBJECT add constraint FKK_PRICING_REF_OBJECT_25 foreign key (BELONG_CALC_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.AGGREGATE_OBJECT add constraint FKK_PRICING_REF_OBJECT_26 foreign key (SUB_CALC_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.AGREEMENT add constraint FKK_CUST_151 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.AGREEMENT_ATTR add constraint FKK_AGREEMENT_OBJECT_224 foreign key (AGREEMENT_ID, OBJECT_ID)
+      references PARTY_USER.AGREEMENT_OBJECT (AGR_AGREEMENT_ID, OBJECT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.AGREEMENT_OBJECT add constraint FKK_AGREEMENT_222 foreign key (AGR_AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.AGREEMENT_OBJECT add constraint FKK_AGREEMENT_OBJECT_223 foreign key (AGR_AGREEMENT_ID, PARENT_OBJECT_ID)
+      references PARTY_USER.AGREEMENT_OBJECT (AGR_AGREEMENT_ID, OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.APPORTION_RESULT add constraint FKK_SERV_239 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.ATOM_TREE_STRUCT2 add constraint FKK_ATOM_TREE_348 foreign key (TREE_ID)
+      references USER_STAT.ATOM_TREE2 (TREE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.ATOM_TREE_STRUCT_ITEM2 add constraint FKK_ATOM_TREE_STRUCT_360 foreign key (TREE_NODE_ID)
+      references USER_STAT.ATOM_TREE_STRUCT2 (TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_ACCT_ITEM_PAYED add constraint FKK_ACCT_ITEM_221 foreign key (ACCT_ITEM_ID)
+      references USER_ACCT.ACCT_ITEM (ACCT_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_ACCT_ITEM_PAYED add constraint FKK_BALANCE_PAYOUT_226 foreign key (OPER_PAYOUT_ID)
+      references USER_ACCT.BALANCE_PAYOUT (OPER_PAYOUT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PAYOUT add constraint FKK_ACCT_BALANCE_218 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PAYOUT add constraint FKK_BALANCE_RELATION_247 foreign key (BALANCE_RELATION_ID)
+      references USER_ACCT.BALANCE_RELATION (BALANCE_RELATION_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PAYOUT add constraint FKK_BILLING_CYCLE_219 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PAYOUT add constraint FKK_BILL_220 foreign key (BILL_ID)
+      references USER_ACCT.BILL (BILL_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PRESENT_RULE add constraint FKK_BALANCE_TYPE_295 foreign key (PAY_BALANCE_TYPE_ID)
+      references USER_ACCT.BALANCE_TYPE (BALANCE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_PRESENT_RULE add constraint FKK_BALANCE_TYPE_296 foreign key (PRESENT_BALANCE_TYPE_ID)
+      references USER_ACCT.BALANCE_TYPE (BALANCE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_RELATION add constraint FKK_ACCT_BALANCE_84 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table BALANCE_RESERVE_DETAIL add constraint FK_Reference_424 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table BALANCE_RESERVE_DETAIL add constraint FK_Reference_425 foreign key (SERIAL_NUMBER)
+      references TRADE_RECORD (SERIAL_NUMBER) on delete restrict on update restrict;
+
+alter table BALANCE_RESERVE_DETAIL add constraint FK_Reference_428 foreign key (OPER_PAYOUT_ID)
+      references USER_ACCT.BALANCE_PAYOUT (OPER_PAYOUT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_SHARE_RULE add constraint FKK_ACCT_BALANCE_243 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_SHARE_RULE add constraint FKK_SHARE_RULE_TYPE_244 foreign key (SHARE_RULE_TYPE_ID)
+      references USER_ACCT.SHARE_RULE_TYPE (SHARE_RULE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_SOURCE add constraint FKK_ACCT_BALANCE_217 foreign key (ACCT_BALANCE_ID)
+      references USER_ACCT.ACCT_BALANCE (ACCT_BALANCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_SOURCE add constraint FKK_BALANCE_RELATION_246 foreign key (BALANCE_RELATION_ID)
+      references USER_ACCT.BALANCE_RELATION (BALANCE_RELATION_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_SOURCE add constraint FKK_BALANCE_SOURCE_TYPE_248 foreign key (BALANCE_SOURCE_ID)
+      references USER_ACCT.BALANCE_SOURCE_TYPE (BALANCE_SOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_TYPE add constraint FKK_MEASURE_METHOD_294 foreign key (MEASURE_METHOD_ID)
+      references USER_PRICING.MEASURE_METHOD (MEASURE_METHOD_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BALANCE_TYPE add constraint FKK_SPECIAL_PAYMENT_DESC_79 foreign key (SPE_PAYMENT_ID)
+      references USER_ACCT.SPECIAL_PAYMENT_DESC (SPE_PAYMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.BALANCE_TYPE_PARAM add constraint FK_Reference_385 foreign key (BALANCE_TYPE_ID)
+      references USER_ACCT.BALANCE_TYPE (BALANCE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.BAND add constraint FKK_BAND_267 foreign key (BAN_BAND_ID)
+      references USER_PRODUCT.BAND (BAND_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BANK_BRANCH add constraint FKK_BANK_140 foreign key (BANK_ID)
+      references USER_ACCT.BANK (BANK_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_ACCT_150 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_BILLING_CYCLE_73 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_PAYMENT_62 foreign key (PAYMENT_ID)
+      references USER_ACCT.PAYMENT (PAYMENT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_PAYMENT_METHOD_121 foreign key (PAYMENT_METHOD)
+      references USER_ACCT.PAYMENT_METHOD (PAYMENT_METHOD) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_SERV_149 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL add constraint FKK_STAFF_148 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILLING_CYCLE add constraint FKK_BILLING_CYCLE_143 foreign key (LAST_BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILLING_CYCLE add constraint FKK_BILLING_CYCLE_TYPE_115 foreign key (BILLING_CYCLE_TYPE_ID)
+      references USER_ACCT.BILLING_CYCLE_TYPE (BILLING_CYCLE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.BILLING_REGION add constraint FKK_BILLING_REGION_105 foreign key (PARENT_REGION_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.BILLING_REGION add constraint FKK_REGION_335 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ACCT_ITEM add constraint FKK_ACCT_ITEM_SOURCE_69 foreign key (ITEM_SOURCE_ID)
+      references USER_ACCT.ACCT_ITEM_SOURCE (ITEM_SOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ACCT_ITEM add constraint FKK_ACCT_ITEM_TYPE_68 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ACCT_ITEM add constraint FKK_BILL_ITEM_59 foreign key (BILL_ITEM_TYPE_ID)
+      references USER_ACCT.BILL_ITEM (BILL_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT add constraint FKK_BILL_REMARK_123 foreign key (BILL_REMARK_ID)
+      references USER_ACCT.BILL_REMARK (BILL_REMARK_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_CUSTOMIZE add constraint FKK_ADDRESS_289 foreign key (ADDRESS_ID)
+      references USER_LOCATION.ADDRESS (ADDRESS_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_CUSTOMIZE add constraint FKK_BILL_FORMAT_292 foreign key (BILL_FORMAT_ID)
+      references USER_ACCT.BILL_FORMAT (BILL_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_ITEM add constraint FKK_BILL_FORMAT_132 foreign key (BILL_FORMAT_ID)
+      references USER_ACCT.BILL_FORMAT (BILL_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_ITEM add constraint FKK_BILL_ITEM_60 foreign key (BILL_ITEM_TYPE_ID)
+      references USER_ACCT.BILL_ITEM (BILL_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_SELECTOR add constraint FKK_BILL_FORMAT_293 foreign key (BILL_FORMAT_ID)
+      references USER_ACCT.BILL_FORMAT (BILL_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_FORMAT_SELECTOR add constraint FKK_BILL_FORMAT_CUSTOMIZE_291 foreign key (BILL_FORMAT_CUSTOMIZE_ID)
+      references USER_ACCT.BILL_FORMAT_CUSTOMIZE (BILL_FORMAT_CUSTOMIZE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ITEM add constraint FKK_BILL_ITEM_55 foreign key (BILL_PARENT_ID)
+      references USER_ACCT.BILL_ITEM (BILL_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ITEM add constraint FKK_BILL_REMARK_125 foreign key (BILL_REMARK_ID)
+      references USER_ACCT.BILL_REMARK (BILL_REMARK_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_ITEM add constraint FKK_PRODUCT_OFFER_285 foreign key (PRODUCT_OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_RECORD add constraint FKK_BILL_FORMAT_CUSTOMIZE_290 foreign key (BILL_FORMAT_CUSTOMIZE_ID)
+      references USER_ACCT.BILL_FORMAT_CUSTOMIZE (BILL_FORMAT_CUSTOMIZE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.BILL_REMARK add constraint FKK_BILL_VARIABLE_124 foreign key (BILL_VARIABLE_ID)
+      references USER_ACCT.BILL_VARIABLE (BILL_VARIABLE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.BORDER_ROAMING_REGION add constraint FK_Reference_373 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.BORDER_ROAMING_REGION add constraint FK_Reference_411 foreign key (CELL_INFO_ID)
+      references USER_LOCATION.CELL_INFO (CELL_INFO_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CATALOG_ITEM add constraint FKK_BAND_258 foreign key (BAND_ID)
+      references USER_PRODUCT.BAND (BAND_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CATALOG_ITEM add constraint FKK_CATALOG_177 foreign key (CATALOG_ID)
+      references USER_PRODUCT.CATALOG (CATALOG_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CATALOG_ITEM add constraint FKK_CATALOG_ITEM_178 foreign key (PARENT_CATALOG_ITEM_ID)
+      references USER_PRODUCT.CATALOG_ITEM (CATALOG_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CATALOG_ITEM_ELEMENT add constraint FKK_CATALOG_ITEM_176 foreign key (CATALOG_ITEM_ID)
+      references USER_PRODUCT.CATALOG_ITEM (CATALOG_ITEM_ID) on delete restrict on update restrict;
+
+alter table CC_BUSINESS_TYPE add constraint FK_Reference_414 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table CC_PLAN_INSTANCE_RELATION add constraint FK_Reference_400 foreign key (CC_PLAN_ID)
+      references CC_PLAN (CC_PLAN_ID) on delete restrict on update restrict;
+
+
+
+alter table USER_ACCT.CC_PLAN_OBJECT add constraint FK_Reference_402 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CC_PLAN_OBJECT add constraint FK_Reference_403 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CC_PLAN_OBJECT add constraint FK_Reference_404 foreign key (REGION_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CC_PLAN_OBJECT add constraint FK_Reference_405 foreign key (CREDIT_GRADE_ID)
+      references PARTY_USER.CREDIT_GRADE (CREDIT_GRADE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CC_PLAN_OBJECT add constraint FK_Reference_406 foreign key (BAND_ID)
+      references USER_PRODUCT.BAND (BAND_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_412 foreign key (CC_PLAN_ID)
+      references CC_PLAN (CC_PLAN_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_413 foreign key (CC_BUSINESS_TYPE_ID)
+      references CC_BUSINESS_TYPE (CC_BUSINESS_TYPE_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_419 foreign key (CC_TYPE_GROUP_ID)
+      references CC_BUSINESS_TYPE_GROUP (CC_TYPE_GROUP_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_420 foreign key (CC_OBJECT_EXINFO_ID)
+      references CC_OBJECT_EXINFO (CC_OBJECT_EXINFO_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_421 foreign key (TIME_PERIOD_ID)
+      references TIME_PERIOD (TIME_PERIOD_ID) on delete restrict on update restrict;
+
+alter table CC_STRATEGY add constraint FK_Reference_422 foreign key (PRICING_RULE_ID)
+      references USER_PRICING.PRICING_RULE (PRICING_RULE_ID) on delete restrict on update restrict;
+
+alter table CC_TYPE_GROUP_MEMBER add constraint FK_Reference_415 foreign key (CC_TYPE_GROUP_ID)
+      references CC_BUSINESS_TYPE_GROUP (CC_TYPE_GROUP_ID) on delete restrict on update restrict;
+
+alter table CC_TYPE_GROUP_MEMBER add constraint FK_Reference_418 foreign key (CC_BUSINESS_TYPE_ID)
+      references CC_BUSINESS_TYPE (CC_BUSINESS_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.CELL_INFO add constraint FK_Reference_407 foreign key (CELL_INFO_ID)
+      references USER_LOCATION.EQUIP (EQUIP_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.CELL_INFO add constraint FK_Reference_408 foreign key (REGION_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CHANNEL_SEGMENT add constraint FKK_PARTNER_111 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.PARTNER (PARTY_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CHARGE_ADJUST_LOG add constraint FKK_ACCT_ITEM_ADJUSTED_87 foreign key (ACCT_ITEM_ID)
+      references USER_ACCT.ACCT_ITEM_ADJUSTED (ADJUST_RECORD_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.CHARGE_ADJUST_LOG add constraint FKK_STAFF_136 foreign key (STAFF_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CONTACT_MEDIUM add constraint FKK_ADDRESS_104 foreign key (ADDRESS_ID)
+      references USER_LOCATION.ADDRESS (ADDRESS_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CONTACT_MEDIUM add constraint FKK_PARTY_ROLE_187 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CONTACT_MEDIUM add constraint FKK_POLITICAL_REGION_339 foreign key (REGION_ID)
+      references USER_LOCATION.POLITICAL_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CONTENT_CLASS add constraint FKK_CONTENT_CLASS_255 foreign key (PARENT_CLASS_ID)
+      references USER_PRODUCT.CONTENT_CLASS (CLASS_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.CONTENT_CLASS add constraint FKK_PRODUCT_256 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CREDIT_GRADE_RULE add constraint FKK_CREDIT_GRADE_276 foreign key (CREDIT_GRADE_ID)
+      references PARTY_USER.CREDIT_GRADE (CREDIT_GRADE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CREDIT_RESULT add constraint FKK_CREDIT_GRADE_275 foreign key (CREDIT_GRADE_ID)
+      references PARTY_USER.CREDIT_GRADE (CREDIT_GRADE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CREDIT_RESULT_DETAIL add constraint FKK_EVAL_RULE_278 foreign key (EVAL_RULE_ID)
+      references PARTY_USER.EVAL_RULE (EVAL_RULE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CREDIT_VALUE add constraint FK_Reference_367 foreign key (CREDIT_VALUE_RULE_ID)
+      references PARTY_USER.CREDIT_VALUE_RULE (CREDIT_VALUE_RULE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CREDIT_VALUE add constraint FK_Reference_368 foreign key (CREDIT_VALUE_TYPE_ID)
+      references PARTY_USER.CREDIT_VALUE_TYPE (CREDIT_VALUE_TYPE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST add constraint FKK_PARTY_ROLE_300 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST add constraint FK_Reference_366 foreign key (CUST_BAND_ID)
+      references USER_PRODUCT.BAND (BAND_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST add constraint FK_Reference_384 foreign key (CUST_TYPE_ID)
+      references PARTY_USER.CUST_TYPE (CUST_TYPE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_ADD_INFO add constraint FKK_AGREEMENT_173 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_ADD_INFO add constraint FKK_CUST_98 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_ADD_INFO add constraint FKK_CUST_ADD_INFO_ITEM_169 foreign key (INFO_ID)
+      references PARTY_USER.CUST_ADD_INFO_ITEM (ASS_INFO_ITEM_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CONTACT_INFO add constraint FKK_AGREEMENT_172 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CONTACT_INFO add constraint FKK_CUST_99 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CORPORATE_INFO add constraint FKK_AGREEMENT_171 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CORPORATE_INFO add constraint FKK_CUST_96 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CORPORATE_INFO add constraint FKK_INDUSTRY_209 foreign key (INDUSTRY_ID)
+      references PARTY_USER.INDUSTRY (INDUSTRY_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CREDIT add constraint FKK_CUST_179 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_CREDIT_RECORD add constraint FKK_CUST_97 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_GROUP_MEMBER add constraint FKK_CUST_109 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_GROUP_MEMBER add constraint FKK_CUST_GROUP_110 foreign key (CUST_GROUP_ID)
+      references PARTY_USER.CUST_GROUP (CUST_GROUP_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_IDENTIFICATION add constraint FKK_CUST_100 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_INTERACTION add constraint FKK_CUST_95 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_INTERACTION_DETAIL add constraint FKK_CUST_INTERACTION_166 foreign key (CUST_INTERACTION_ID)
+      references PARTY_USER.CUST_INTERACTION (CUST_INTERACTION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_INTERACTION_DETAIL add constraint FKK_CUST_INTERACTION_ITEM_167 foreign key (INTERACTION_ITEM_ID)
+      references PARTY_USER.CUST_INTERACTION_ITEM (INTERACTION_ITEM_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_LOYALTY_RECORD add constraint FKK_CUST_168 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_PERSON_INFO add constraint FKK_AGREEMENT_170 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_PERSON_INFO add constraint FKK_CUST_101 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.CUST_PERSON_INFO add constraint FKK_INDUSTRY_208 foreign key (INDUSTRY_ID)
+      references PARTY_USER.INDUSTRY (INDUSTRY_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.DEST_EVENT_FORMAT add constraint FKK_DEST_EVENT_TYPE_312 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.DEST_EVENT_FORMAT_ITEM add constraint FKK_DEST_EVENT_FORMAT_311 foreign key (EVENT_FORMAT_ID)
+      references USER_EVENT.DEST_EVENT_FORMAT (EVENT_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.DEST_EVENT_FORMAT_ITEM add constraint FKK_EVENT_ATTR_313 foreign key (EVENT_ATTR_ID)
+      references USER_EVENT.EVENT_ATTR (EVENT_ATTR_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_CALC_OBJECT add constraint FKK_DISCOUNT_EXPRESS_36 foreign key (DISCONT_EXPRESS_ID)
+      references USER_PRICING.DISCOUNT_EXPRESS (DISCOUNT_EXPRESS_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_CALC_OBJECT add constraint FKK_PRICING_REF_OBJECT_37 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FKK_DISCOUNT_METHOD_27 foreign key (DISCOUNT_METHOD_ID)
+      references USER_PRICING.DISCOUNT_METHOD (DISCOUNT_METHOD_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FKK_PRICING_SECTION_49 foreign key (PRICING_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FKK_RATABLE_RESOURCE_50 foreign key (RATABLE_RESOURCE_ID)
+      references USER_PRICING.RATABLE_RESOURCE (RATABLE_RESOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FKK_REF_VALUE_230 foreign key (END_REF_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FKK_REF_VALUE_231 foreign key (START_REF_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_EXPRESS add constraint FK_Reference_433 foreign key (INTEGRAL_TYPE_ID)
+      references USER_PRICING.INTEGRAL_TYPE (INTEGRAL_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_REPATITION_TYPE add constraint FKK_PRICING_REF_OBJECT_227 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TARGET_OBJECT add constraint FKK_DISCOUNT_EXPRESS_46 foreign key (DISCOUNT_EXPRESS_ID)
+      references USER_PRICING.DISCOUNT_EXPRESS (DISCOUNT_EXPRESS_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TARGET_OBJECT add constraint FKK_DISCOUNT_REPATITION_T_48 foreign key (REPATITION_TYPE_ID)
+      references USER_PRICING.DISCOUNT_REPATITION_TYPE (REPATITION_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TARGET_OBJECT add constraint FKK_PRICING_REF_OBJECT_47 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TIME_LIMIT add constraint FKK_DISCOUNT_EXPRESS_28 foreign key (DISCOUNT_EXPRESS_ID)
+      references USER_PRICING.DISCOUNT_EXPRESS (DISCOUNT_EXPRESS_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TIME_LIMIT add constraint FKK_PRICING_REF_OBJECT_29 foreign key (BEGIN_CALC_OBJECT)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.DISCOUNT_TIME_LIMIT add constraint FKK_PRICING_REF_OBJECT_30 foreign key (END_CALC_OBJECT)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.EMULATORY_PARTNER add constraint FKK_PARTY_ROLE_185 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.EQUIP add constraint FKK_EQUIP_TYPE_329 foreign key (EQUIP_TYPE_ID)
+      references USER_LOCATION.EQUIP_TYPE (EQUIP_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.EQUIP_REGION add constraint FKK_EQUIP_328 foreign key (EQUIP_ID)
+      references USER_LOCATION.EQUIP (EQUIP_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.EQUIP_REGION add constraint FKK_REGION_337 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.EVAL_RULE add constraint FKK_EVAL_INDEX_280 foreign key (TARGET_ID)
+      references PARTY_USER.EVAL_INDEX (TARGET_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.EVAL_RULE add constraint FKK_EVAL_PLAN_274 foreign key (EVAL_PLAN_ID)
+      references PARTY_USER.EVAL_PLAN (EVAL_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.EVENT_CONTENT add constraint FKK_EVENT_ATTR_303 foreign key (EVENT_ATTR_ID)
+      references USER_EVENT.EVENT_ATTR (EVENT_ATTR_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.EVENT_CONTENT add constraint FKK_EVENT_CONTENT_INDEX_302 foreign key (EVENT_CONTENT_ID)
+      references USER_EVENT.EVENT_CONTENT_INDEX (EVENT_CONTENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.EVENT_PRICING_STRATEGY add constraint FKK_DEST_EVENT_TYPE_321 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.EXTERNAL_PRODUCT add constraint FKK_PARTY_ROLE_203 foreign key (PRODUCT_PROVIDER_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.EXTERNAL_STATS2 add constraint FKK_EXTERNAL_TREE_STRUCT_359 foreign key (EXTERNAL_TREE_NODE_ID)
+      references USER_STAT.EXTERNAL_TREE_STRUCT2 (EXTERNAL_TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.EXTERNAL_TREE_STRUCT2 add constraint FKK_TARGET_TREE_353 foreign key (EXTERNAL_TREE_ID)
+      references USER_STAT.TARGET_TREE2 (TARGET_TREE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.FACT_TABLE_COLUMN2 add constraint FKK_FACT_TABLE_DEFINE_351 foreign key (FACT_TABLE_ID)
+      references USER_STAT.FACT_TABLE_DEFINE2 (FACT_TABLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER add constraint FKK_GROUP_INSTANCE_270 foreign key (GROUP_ID)
+      references USER_PRODUCT.GROUP_INSTANCE (GROUP_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER add constraint FKK_GROUP_INSTANCE_ROLE_263 foreign key (MEMBER_ROLE_ID)
+      references USER_PRODUCT.GROUP_INSTANCE_ROLE (MEMBER_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER add constraint FKK_GROUP_MEMBER_TYPE_262 foreign key (MEMBER_TYPE_ID)
+      references USER_PRODUCT.GROUP_MEMBER_TYPE (MEMBER_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER add constraint FKK_LIFE_CYCLE_271 foreign key (LIFE_CYCLE_ID)
+      references USER_PRICING.LIFE_CYCLE (LIFE_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.GROUP_INSTANCE_MEMBER add constraint FKK_SERV_264 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table GROUP_MEMBER_RELATION add constraint FK_Reference_416 foreign key (GROUP_MEMBER_A)
+      references GROUP_PRODUCT_DETAIL (GROUP_MEMBER_ID) on delete restrict on update restrict;
+
+alter table GROUP_MEMBER_RELATION add constraint FK_Reference_417 foreign key (GROUP_MEMBER_Z)
+      references GROUP_PRODUCT_DETAIL (GROUP_MEMBER_ID) on delete restrict on update restrict;
+
+alter table GROUP_PRODUCT_DETAIL add constraint FK_Reference_387 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table GROUP_PRODUCT_DETAIL add constraint FK_Reference_390 foreign key (GROUP_ROLE_ID)
+      references GROUP_ROLE (GROUP_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.HCODE add constraint FKK_EMULATORY_PARTNER_330 foreign key (EMULATORY_PARTNER_ID)
+      references PARTY_USER.EMULATORY_PARTNER (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.HCODE add constraint FKK_POLITICAL_REGION_326 foreign key (POLITICAL_REGION_ID)
+      references USER_LOCATION.POLITICAL_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table IDEP_INFO add constraint FK_Reference_370 foreign key (SC_ID)
+      references SC_INFO (SC_ID) on delete restrict on update restrict;
+
+alter table IDEP_INFO add constraint FK_Reference_430 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.INDIVIDUAL add constraint FKK_PARTY_181 foreign key (INDIVIDUAL_ID)
+      references PARTY_USER.PARTY (PARTY_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.INTEGRAL_REAULT_DETAIL add constraint FKK_EVAL_RULE_277 foreign key (EVAL_RULE_ID)
+      references PARTY_USER.EVAL_RULE (EVAL_RULE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.INTEGRAL_TYPE add constraint FK_Reference_436 foreign key (USER_INTEGRAL_RESULT_ID)
+      references USER_ACCT.USER_INTEGRAL_RESULT (USER_INTEGRAL_RESULT_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.INTERNAL_STRUCT_ITEM2 add constraint FKK_INTERNAL_TREE_STRUCT_355 foreign key (INTERNAL_TREE_NODE_ID)
+      references USER_STAT.INTERNAL_TREE_STRUCT2 (INTERNAL_TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.INTERNAL_TREE_STRUCT2 add constraint FKK_ATOM_TREE_STRUCT_358 foreign key (ATOM_TREE_NODE_ID)
+      references USER_STAT.ATOM_TREE_STRUCT2 (TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.INTERNAL_TREE_STRUCT2 add constraint FKK_FACT_TABLE_DEFINE_362 foreign key (FACT_TABLE_ID)
+      references USER_STAT.FACT_TABLE_DEFINE2 (FACT_TABLE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.INTERNAL_TREE_STRUCT2 add constraint FKK_TARGET_TREE_352 foreign key (INTERNAL_TREE_ID)
+      references USER_STAT.TARGET_TREE2 (TARGET_TREE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.INVOICE add constraint FKK_BILLING_CYCLE_74 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.INVOICE add constraint FKK_BILL_FORMAT_CUSTOMIZE_288 foreign key (BILL_FORMAT_CUSTOMIZE_ID)
+      references USER_ACCT.BILL_FORMAT_CUSTOMIZE (BILL_FORMAT_CUSTOMIZE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.INVOICE add constraint FKK_PAYMENT_75 foreign key (PAYMENT_ID)
+      references USER_ACCT.PAYMENT (PAYMENT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.INVOICE add constraint FKK_STAFF_146 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.INVOICE_DETAIL add constraint FKK_INVOICE_284 foreign key (INVOICE_ID)
+      references USER_ACCT.INVOICE (INVOICE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.LOCAL_HEAD add constraint FKK_BILLING_REGION_325 foreign key (EXCHANGE_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.LOCAL_HEAD add constraint FKK_EMULATORY_PARTNER_332 foreign key (EMULATORY_PARTNER_ID)
+      references PARTY_USER.EMULATORY_PARTNER (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.LOGICAL_ADDRESS add constraint FKK_ADDRESS_180 foreign key (ADDRESS_ID)
+      references USER_LOCATION.ADDRESS (ADDRESS_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.MID_ID_DEFINE2 add constraint FKK_KEY_ID_DEFINE_349 foreign key (KEY_ID)
+      references USER_STAT.KEY_ID_DEFINE2 (KEY_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.MID_ID_DEFINE2 add constraint FKK_MID_TABLE_DEFINE_361 foreign key (MID_TABLE_ID)
+      references USER_STAT.MID_TABLE_DEFINE2 (MID_TABLE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.MID_TABLE_COLUMN2 add constraint FKK_MID_TABLE_DEFINE_350 foreign key (MID_TABLE_ID)
+      references USER_STAT.MID_TABLE_DEFINE2 (MID_TABLE_ID) on delete restrict on update restrict;
+
+alter table MIN_INFO add constraint FK_Reference_409 foreign key (REGION_ID)
+      references USER_LOCATION.POLITICAL_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table MIN_INFO add constraint FK_Reference_410 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.EMULATORY_PARTNER (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table NODE_INFO add constraint FK_Reference_368 foreign key (LICENSE_ID)
+      references LICENSE (LICENSE_ID) on delete restrict on update restrict;
+
+alter table NODE_INFO add constraint FK_Reference_369 foreign key (IDEP_ID)
+      references IDEP_INFO (IDEP_ID) on delete restrict on update restrict;
+
+alter table NODE_INFO add constraint FK_Reference_429 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table OCS_RESERVE_EVENT_GRP_MEMBER add constraint FK_Reference_3 foreign key (EVT_TYPE_GRP_ID)
+      references OCS_RESERVE_EVENT_GRP (EVT_TYPE_GRP_ID) on delete restrict on update restrict;
+
+alter table OCS_RESERVE_EVENT_GRP_MEMBER add constraint FK_Reference_382 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table OCS_RESERVE_LIMIT add constraint FK_Reference_2 foreign key (EVT_TYPE_GRP_ID)
+      references OCS_RESERVE_EVENT_GRP (EVT_TYPE_GRP_ID) on delete restrict on update restrict;
+
+alter table OCS_RESERVE_POLICY add constraint FK_Reference_1 foreign key (EVT_TYPE_GRP_ID)
+      references OCS_RESERVE_EVENT_GRP (EVT_TYPE_GRP_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.ORGANIZATION add constraint FKK_ORGANIZATION_183 foreign key (PARENT_ORGID)
+      references PARTY_USER.ORGANIZATION (ORG_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.ORGANIZATION add constraint FKK_PARTY_182 foreign key (ORG_ID)
+      references PARTY_USER.PARTY (PARTY_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.ORGANIZATION add constraint FKK_REGION_338 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.PARTNER add constraint FKK_PARTY_ROLE_186 foreign key (PARTY_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PARTNER_ACCT_ITEM add constraint FK_Reference_386 foreign key (ACCT_ITEM_ID)
+      references USER_ACCT.ACCT_ITEM (ACCT_ITEM_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.PARTNER_AGREEMENT add constraint FKK_PARTNER_283 foreign key (PARTNER_ID)
+      references PARTY_USER.PARTNER (PARTY_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.PARTY_IDENTIFICATION add constraint FKK_PARTY_102 foreign key (PARTY_ID)
+      references PARTY_USER.PARTY (PARTY_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.PARTY_ROLE add constraint FKK_PARTY_188 foreign key (PARTY_ID)
+      references PARTY_USER.PARTY (PARTY_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT add constraint FKK_PAYMENT_METHOD_122 foreign key (PAYMENT_METHOD)
+      references USER_ACCT.PAYMENT_METHOD (PAYMENT_METHOD) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT add constraint FKK_PAYMENT_METHOD_207 foreign key (PAYED_METHOD)
+      references USER_ACCT.PAYMENT_METHOD (PAYMENT_METHOD) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT add constraint FKK_STAFF_147 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT_PLAN add constraint FKK_ACCT_286 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT_PLAN add constraint FKK_PAYMENT_METHOD_287 foreign key (PAYMENT_METHOD)
+      references USER_ACCT.PAYMENT_METHOD (PAYMENT_METHOD) on delete restrict on update restrict;
+
+alter table USER_ACCT.PAYMENT_RULE add constraint FKK_AGREEMENT_119 foreign key (CUST_AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table PAY_STRATEGY add constraint FK_Reference_426 foreign key (TRADE_TYPE_ID)
+      references TRADE_TYPE (TRADE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PLUSMINUS add constraint FKK_ACCT_ITEM_TYPE_71 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PLUSMINUS add constraint FKK_BILLING_CYCLE_144 foreign key (FEE_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PLUSMINUS add constraint FKK_BILLING_CYCLE_76 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.PLUSMINUS add constraint FKK_STAFF_145 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.POLITICAL_REGION add constraint FKK_POLITICAL_REGION_333 foreign key (PARENT_REGION_ID)
+      references USER_LOCATION.POLITICAL_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.POLITICAL_REGION add constraint FKK_REGION_334 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.PRERATE_EVENT add constraint FKK_DEST_EVENT_TYPE_307 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.PRERATE_EVENT add constraint FKK_EVENT_CONTENT_INDEX_305 foreign key (EVENT_CONTENT_ID)
+      references USER_EVENT.EVENT_CONTENT_INDEX (EVENT_CONTENT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.PRERATE_EVENT add constraint FKK_SOURCE_EVENT_309 foreign key (EVENT_ID)
+      references USER_EVENT.SOURCE_EVENT (EVENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE add constraint FKK_EVENT_PRICING_STRATEGY_42 foreign key (EVENT_PRICING_STRATEGY_ID)
+      references USER_PRICING.EVENT_PRICING_STRATEGY (EVENT_PRICING_STRATEGY_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE add constraint FKK_PRICING_PLAN_43 foreign key (PRICING_PLAN_ID)
+      references USER_PRICING.PRICING_PLAN (PRICING_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE add constraint FK_Reference_361 foreign key (OFFER_OBJECT_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_OBJECT (OFFER_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE add constraint FK_Reference_374 foreign key (LIF_LIFE_CYCLE_ID)
+      references USER_PRICING.LIFE_CYCLE2 (LIFE_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE_RELATION add constraint FKK_PRICING_COMBINE_52 foreign key (A_PRICING_COMBINE_ID)
+      references USER_PRICING.PRICING_COMBINE (PRICING_COMBINE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_COMBINE_RELATION add constraint FKK_PRICING_COMBINE_53 foreign key (Z_PRICING_COMBINE_ID)
+      references USER_PRICING.PRICING_COMBINE (PRICING_COMBINE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_ENUM_PARAM add constraint FKK_PRICING_PARAM_DEFINE_38 foreign key (PRICING_PARAM_ID)
+      references USER_PRICING.PRICING_PARAM_DEFINE (PRICING_PARAM_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_REF_OBJECT add constraint FKK_MEASURE_METHOD_232 foreign key (MEASURE_METHOD_ID)
+      references USER_PRICING.MEASURE_METHOD (MEASURE_METHOD_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_REF_OBJECT add constraint FKK_OWNER_20 foreign key (OWNER_ID)
+      references USER_PRICING.OWNER (OWNER_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_RULE add constraint FKK_OPERATOR_23 foreign key (OPERATOR_ID)
+      references USER_PRICING.OPERATOR (OPERATOR_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_RULE add constraint FKK_PRICING_REF_OBJECT_24 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_RULE add constraint FKK_PRICING_SECTION_22 foreign key (PRICING_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_RULE add constraint FKK_REF_VALUE_234 foreign key (RESULT_REF_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_EVENT_PRICING_STRATEGY_196 foreign key (EVENT_PRICING_STRATEGY_ID)
+      references USER_PRICING.EVENT_PRICING_STRATEGY (EVENT_PRICING_STRATEGY_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_PRICING_REF_OBJECT_19 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_PRICING_SECTION_21 foreign key (PARENT_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_PRICING_SECTION_TYPE_200 foreign key (SECTION_TYPE_ID)
+      references USER_PRICING.PRICING_SECTION_TYPE (SECTION_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_REF_VALUE_228 foreign key (END_REF_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_REF_VALUE_229 foreign key (START_REF_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION add constraint FKK_ZONE_ITEM_35 foreign key (ZONE_ITEM_ID)
+      references USER_PRICING.ZONE_ITEM (ZONE_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION_RELATION add constraint FKK_PRICING_SECTION_44 foreign key (A_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.PRICING_SECTION_RELATION add constraint FKK_PRICING_SECTION_45 foreign key (Z_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.PRIVILEGE add constraint FKK_PRIVILEGE_189 foreign key (PARENT_PRIVILEGEID)
+      references PARTY_USER.PRIVILEGE (PRIVILEGE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT add constraint FKK_PARTY_ROLE_205 foreign key (PRODUCT_PROVIDER_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT add constraint FKK_PRICING_PLAN_107 foreign key (PRICING_PLAN_ID)
+      references USER_PRICING.PRICING_PLAN (PRICING_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT add constraint FKK_PRODUCT_FAMILY_257 foreign key (PRODUCT_FAMILY_ID)
+      references USER_PRODUCT.PRODUCT_FAMILY (PRODUCT_FAMILY_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT add constraint FK_Reference_434 foreign key (INTEGRAL_PRICING_PLAN_ID)
+      references USER_PRICING.PRICING_PLAN (PRICING_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_ATTR add constraint FKK_ATTR_VALUE_TYPE_210 foreign key (ATTR_VALUE_TYPE_ID)
+      references USER_PRODUCT.ATTR_VALUE_TYPE (ATTR_VALUE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_ATTR add constraint FKK_ATTR_VALUE_UNIT_212 foreign key (ATTR_VALUE_UNIT_ID)
+      references USER_PRODUCT.ATTR_VALUE_UNIT (ATTR_VALUE_UNIT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_ATTR add constraint FKK_PRODUCT_1 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER add constraint FKK_BAND_254 foreign key (BAND_ID)
+      references USER_PRODUCT.BAND (BAND_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER add constraint FKK_PRICING_PLAN_273 foreign key (PRICING_PLAN_ID)
+      references USER_PRICING.PRICING_PLAN (PRICING_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER add constraint FK_Reference_435 foreign key (INTEGRAL_PRICING_PLAN_ID)
+      references USER_PRICING.PRICING_PLAN (PRICING_PLAN_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_ATTR add constraint FKK_ATTR_VALUE_TYPE_211 foreign key (ATTR_VALUE_TYPE_ID)
+      references USER_PRODUCT.ATTR_VALUE_TYPE (ATTR_VALUE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_ATTR add constraint FKK_ATTR_VALUE_UNIT_213 foreign key (ATTR_VALUE_UNIT_ID)
+      references USER_PRODUCT.ATTR_VALUE_UNIT (ATTR_VALUE_UNIT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_ATTR add constraint FKK_PRODUCT_OFFER_14 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE add constraint FKK_AGREEMENT_198 foreign key (CUST_AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE add constraint FKK_CUST_197 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE add constraint FKK_PRODUCT_OFFER_272 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR add constraint FKK_AGREEMENT_215 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR add constraint FKK_PRODUCT_OFFER_ATTR_216 foreign key (ATTR_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_ATTR (OFFER_ATTR_SEQ) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_INSTANCE_ATTR add constraint FKK_PRODUCT_OFFER_INSTANCE_214 foreign key (SERV_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_INSTANCE (PRODUCT_OFFER_INSTANCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT add constraint FKK_PRODUCT_OFFER_252 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE add constraint FKK_PRODUCT_OFFER_INSTANCE_259 foreign key (PRODUCT_OFFER_INSTANCE_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_INSTANCE (PRODUCT_OFFER_INSTANCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE add constraint FKK_PRODUCT_OFFER_OBJECT_268 foreign key (OFFER_OBJECT_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_OBJECT (OFFER_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_PARAM add constraint FKK_PRODUCT_OFFER_253 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE add constraint FKK_LIFE_CYCLE_266 foreign key (LIFE_CYCLE_ID)
+      references USER_PRICING.LIFE_CYCLE (LIFE_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE add constraint FKK_PRODUCT_OFFER_INSTANCE_260 foreign key (PRODUCT_OFFER_INSTANCE_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_INSTANCE (PRODUCT_OFFER_INSTANCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE add constraint FKK_PRODUCT_OFFER_PARAM_269 foreign key (OFFER_PARAM_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_PARAM (OFFER_PARAM_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_PARAM_INSTANCE add constraint FK_Reference_376 foreign key (OFFER_OBJECT_INSTANCE_ID)
+      references USER_PRODUCT.PRODUCT_OFFER_OBJECT_INSTANCE (OFFER_OBJECT_INSTANCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_RELATION add constraint FKK_PRODUCT_OFFER_10 foreign key (OFFER_Z_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_RELATION add constraint FKK_PRODUCT_OFFER_9 foreign key (OFFER_A_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_RESTRICATION add constraint FKK_MAKET_STRATEGY_13 foreign key (STRATEGY_ID)
+      references USER_PRODUCT.MAKET_STRATEGY (STRATEGY_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_OFFER_RESTRICATION add constraint FKK_PRODUCT_OFFER_12 foreign key (OFFER_ID)
+      references USER_PRODUCT.PRODUCT_OFFER (OFFER_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RELATION add constraint FKK_EXTERNAL_PRODUCT_3 foreign key (PROD_Z_ID)
+      references USER_PRODUCT.EXTERNAL_PRODUCT (EXTERNAL_PRODUC_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RELATION add constraint FKK_PARTY_ROLE_202 foreign key (PROD_A_PROVIDER_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RELATION add constraint FKK_PARTY_ROLE_204 foreign key (PROD_Z_PROVIDER_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RELATION add constraint FKK_PRODUCT_2 foreign key (PROD_A_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RELATION add constraint FKK_PRODUCT_RELATION_TYPE_4 foreign key (RELATION_TYPE_ID)
+      references USER_PRODUCT.PRODUCT_RELATION_TYPE (RELATION_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_RESOURCE add constraint FKK_PRODUCT_8 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE add constraint FKK_DEST_EVENT_TYPE_322 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.PRODUCT_USAGE_EVENT_TYPE add constraint FKK_PRODUCT_5 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+
+
+alter table PROVIDED_CAPABILITY_INFO add constraint FK_Reference_374 foreign key (CAPABILITY_ID)
+      references CAPABILITY_INFO (CAPABILITY_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.RATABLE_CYCLE add constraint FKK_RATABLE_CYCLE_TYPE_299 foreign key (RATABLE_CYCLE_TYPE_ID)
+      references USER_ACCT.RATABLE_CYCLE_TYPE (RATABLE_CYCLE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.RATABLE_RESOURCE add constraint FKK_TARIFF_UNIT_31 foreign key (ORG_TARIFF_UNIT_ID)
+      references USER_PRICING.TARIFF_UNIT (TARIFF_UNIT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.RATABLE_RESOURCE add constraint FK_Reference_364 foreign key (DEFAULT_RATABLE_CYCLE_TYPE_ID)
+      references USER_ACCT.RATABLE_CYCLE_TYPE (RATABLE_CYCLE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR add constraint FKK_RATABLE_CYCLE_298 foreign key (RATABLE_CYCLE_ID)
+      references USER_ACCT.RATABLE_CYCLE (RATABLE_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.RATABLE_RESOURCE_ACCUMULATOR add constraint FKK_RATABLE_RESOURCE_236 foreign key (RATABLE_RESOURCE_ID)
+      references USER_PRICING.RATABLE_RESOURCE (RATABLE_RESOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.RATED_EVENT add constraint FKK_DEST_EVENT_TYPE_308 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.RATED_EVENT add constraint FKK_EVENT_CONTENT_INDEX_304 foreign key (EVENT_CONTENT_ID)
+      references USER_EVENT.EVENT_CONTENT_INDEX (EVENT_CONTENT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.RATED_EVENT add constraint FKK_SERV_323 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.RATED_EVENT add constraint FKK_SOURCE_EVENT_310 foreign key (EVENT_ID)
+      references USER_EVENT.SOURCE_EVENT (EVENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.REF_VALUE add constraint FKK_PRICING_PARAM_DEFINE_233 foreign key (PRICING_PRARM_ID)
+      references USER_PRICING.PRICING_PARAM_DEFINE (PRICING_PARAM_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.REF_VALUE add constraint FKK_PRICING_REF_OBJECT_235 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.ROLE_PRIVILEGE add constraint FKK_PRIVILEGE_194 foreign key (PRIVILEGE_ID)
+      references PARTY_USER.PRIVILEGE (PRIVILEGE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.ROLE_PRIVILEGE add constraint FKK_ROLE_195 foreign key (ROLE_ID)
+      references PARTY_USER.ROLE (ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV add constraint FKK_AGREEMENT_153 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV add constraint FKK_BILLING_CYCLE_TYPE_249 foreign key (BILLING_CYCLE_TYPE_ID)
+      references USER_ACCT.BILLING_CYCLE_TYPE (BILLING_CYCLE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV add constraint FKK_CUST_157 foreign key (CUST_ID)
+      references PARTY_USER.CUST (CUST_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV add constraint FKK_PRODUCT_156 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV add constraint FKK_PRODUCT_FAMILY_261 foreign key (PRODUCT_FAMILY_ID)
+      references USER_PRODUCT.PRODUCT_FAMILY (PRODUCT_FAMILY_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERVICE_OFFER add constraint FKK_ACTION_11 foreign key (ACTION_ID)
+      references USER_PRODUCT.ACTION (ACTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERVICE_OFFER add constraint FKK_PRODUCT_7 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SERV_ACCT add constraint FKK_ACCT_77 foreign key (ACCT_ID)
+      references USER_ACCT.ACCT (ACCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SERV_ACCT add constraint FKK_ACCT_ITEM_GROUP_56 foreign key (ACCT_ITEM_GROUP_ID)
+      references USER_ACCT.ACCT_ITEM_GROUP (ACCT_ITEM_GROUP_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SERV_ACCT add constraint FKK_PAYMENT_RULE_78 foreign key (PAYMENT_RULE_ID)
+      references USER_ACCT.PAYMENT_RULE (PAYMENT_RULE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SERV_ACCT add constraint FKK_SERV_118 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+
+
+alter table USER_PRODUCT.SERV_ATTR add constraint FKK_AGREEMENT_159 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_ATTR add constraint FKK_PRODUCT_ATTR_165 foreign key (ATTR_ID)
+      references USER_PRODUCT.PRODUCT_ATTR (ATTR_SEQ) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_ATTR add constraint FKK_SERV_94 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table SERV_AUTH add constraint FK_Reference_383 foreign key (EVENT_TYPE_ID)
+      references USER_EVENT.DEST_EVENT_TYPE (EVENT_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_BILLING_MODE add constraint FKK_SERV_251 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_IDENTIFICATION add constraint FKK_AGREEMENT_160 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_IDENTIFICATION add constraint FKK_SERV_92 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_ADDRESS_112 foreign key (ADDRESS_ID)
+      references USER_LOCATION.ADDRESS (ADDRESS_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_AGREEMENT_162 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_BILLING_REGION_113 foreign key (EXCHANGE_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_ORGANIZATION_341 foreign key (BUREAU_ID)
+      references PARTY_USER.ORGANIZATION (ORG_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_SERV_91 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_LOCATION add constraint FKK_STAT_REGION_340 foreign key (STAT_REGION_ID)
+      references USER_LOCATION.STAT_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.SERV_POINTS_REWARD_RECORD add constraint FKK_INTEGRAL_RESULT_279 foreign key (INTEGRAL_REAULT_ID)
+      references PARTY_USER.INTEGRAL_RESULT (INTEGRAL_REAULT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.SERV_POINTS_REWARD_RECORD add constraint FKK_PRESENT_281 foreign key (PRESENT_ID)
+      references PARTY_USER.PRESENT (PRESENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.SERV_POINTS_REWARD_RULE add constraint FKK_PRESENT_282 foreign key (PRESENT_ID)
+      references PARTY_USER.PRESENT (PRESENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_PRODUCT add constraint FKK_AGREEMENT_158 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_PRODUCT add constraint FKK_PRODUCT_163 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_PRODUCT add constraint FKK_SERV_90 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_PRODUCT_ATTR add constraint FKK_PRODUCT_ATTR_164 foreign key (ATTR_ID)
+      references USER_PRODUCT.PRODUCT_ATTR (ATTR_SEQ) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_PRODUCT_ATTR add constraint FKK_SERV_PRODUCT_89 foreign key (SERV_PRODUCT_ID)
+      references USER_PRODUCT.SERV_PRODUCT (SERV_PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_RELATION add constraint FK_Reference_362 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_RELATION add constraint FK_Reference_363 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+
+alter table USER_PRODUCT.SERV_STATE_ATTR add constraint FKK_OWE_BUSINESS_TYPE_238 foreign key (OWE_BUSINESS_TYPE_ID)
+      references USER_ACCT.OWE_BUSINESS_TYPE (OWE_BUSINESS_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_STATE_ATTR add constraint FKK_SERV_225 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_SUBSRIBER add constraint FKK_AGREEMENT_161 foreign key (AGREEMENT_ID)
+      references PARTY_USER.AGREEMENT (AGREEMENT_ID) on delete restrict on update restrict;
+
+alter table USER_PRODUCT.SERV_SUBSRIBER add constraint FKK_SERV_93 foreign key (SERV_ID)
+      references USER_PRODUCT.SERV (SERV_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SETTLE_CATALOG add constraint FKK_PARTNER_342 foreign key (CATALOG_ID)
+      references PARTY_USER.PARTNER (PARTY_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SETTLE_CATALOG_ITEM add constraint FKK_SETTLE_CATALOG_343 foreign key (CATALOG_ID)
+      references USER_ACCT.SETTLE_CATALOG (CATALOG_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT add constraint FKK_SETTLE_CATALOG_ITEM_344 foreign key (CATALOG_ITEM_ID)
+      references USER_ACCT.SETTLE_CATALOG_ITEM (CATALOG_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SETTLE_CATALOG_ITEM_ELEMENT add constraint FKK_SETTLE_RULE_345 foreign key (ELEMENT_ID)
+      references USER_ACCT.SETTLE_RULE (SETTLE_RULE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SETTLE_RULE add constraint FKK_EVENT_PRICING_STRATEGY_346 foreign key (EVENT_PRICING_STRATEGY_ID)
+      references USER_PRICING.EVENT_PRICING_STRATEGY (EVENT_PRICING_STRATEGY_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT add constraint FKK_EVENT_CONTENT_INDEX_306 foreign key (EVENT_CONTENT_ID)
+      references USER_EVENT.EVENT_CONTENT_INDEX (EVENT_CONTENT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT add constraint FKK_SOURCE_EVENT_TYPE_316 foreign key (SOURCE_EVENT_TYPE)
+      references USER_EVENT.SOURCE_EVENT_TYPE (SOURCE_EVENT_TYPE) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT add constraint FKK_SOURCE_EVENT_TYPE_320 foreign key (SOURCE_EVENT_TYPE)
+      references USER_EVENT.SOURCE_EVENT_TYPE (SOURCE_EVENT_TYPE) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_ITEM add constraint FKK_DATA_FORMAT_301 foreign key (DATA_FORMAT_ID)
+      references USER_EVENT.DATA_FORMAT (DATA_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_ITEM add constraint FKK_EVENT_ATTR_315 foreign key (EVENT_ATTR_ID)
+      references USER_EVENT.EVENT_ATTR (EVENT_ATTR_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_ITEM add constraint FKK_SOURCE_EVENT_FORMAT_S_314 foreign key (EVENT_FORMAT_SEGMENT_ID)
+      references USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT (EVENT_FORMAT_SEGMENT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_NORMAL add constraint FKK_SOURCE_EVENT_FORMAT_317 foreign key (EVENT_FORMAT_ID)
+      references USER_EVENT.SOURCE_EVENT_FORMAT (EVENT_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_OTHER add constraint FKK_SOURCE_EVENT_FORMAT_318 foreign key (EVENT_FORMAT_ID)
+      references USER_EVENT.SOURCE_EVENT_FORMAT (EVENT_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_EVENT.SOURCE_EVENT_FORMAT_SEGMENT add constraint FKK_SOURCE_EVENT_FORMAT_N_319 foreign key (EVENT_FORMAT_ID)
+      references USER_EVENT.SOURCE_EVENT_FORMAT_NORMAL (EVENT_FORMAT_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.SPECIAL_HEAD add constraint FKK_BILLING_REGION_324 foreign key (LATN_ID)
+      references USER_LOCATION.BILLING_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.SPECIAL_HEAD add constraint FKK_EMULATORY_PARTNER_331 foreign key (EMULATORY_PARTNER_ID)
+      references PARTY_USER.EMULATORY_PARTNER (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SPECIAL_PAYMENT add constraint FKK_ACCT_ITEM_GROUP_297 foreign key (ACCT_ITEM_GROUP_ID)
+      references USER_ACCT.ACCT_ITEM_GROUP (ACCT_ITEM_GROUP_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SPECIAL_PAYMENT add constraint FKK_PARTNER_138 foreign key (PARTNER_ID)
+      references PARTY_USER.PARTNER (PARTY_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SPECIAL_PAYMENT add constraint FKK_PRODUCT_139 foreign key (PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SPECIAL_PAYMENT add constraint FKK_SPECIAL_PAYMENT_DESC_80 foreign key (SPE_PAYMENT_ID)
+      references USER_ACCT.SPECIAL_PAYMENT_DESC (SPE_PAYMENT_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF add constraint FKK_ORGANIZATION_250 foreign key (OPERATE_ORG_ID)
+      references PARTY_USER.ORGANIZATION (ORG_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF add constraint FKK_PARTY_ROLE_184 foreign key (STAFF_ID)
+      references PARTY_USER.PARTY_ROLE (PARTY_ROLE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF add constraint FKK_STAFF_103 foreign key (PARENT_PARTYROLEID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF_PRIVILEGE add constraint FKK_PRIVILEGE_193 foreign key (PRIVILEGE_ID)
+      references PARTY_USER.PRIVILEGE (PRIVILEGE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF_PRIVILEGE add constraint FKK_STAFF_192 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF_ROLE add constraint FKK_ROLE_191 foreign key (ROLE_ID)
+      references PARTY_USER.ROLE (ROLE_ID) on delete restrict on update restrict;
+
+alter table PARTY_USER.STAFF_ROLE add constraint FKK_STAFF_190 foreign key (PARTY_ROLE_ID)
+      references PARTY_USER.STAFF (STAFF_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.STATS_CHECK2 add constraint FKK_EXTERNAL_TREE_STRUCT_357 foreign key (TREE_NODE_ID)
+      references USER_STAT.EXTERNAL_TREE_STRUCT2 (EXTERNAL_TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.STATS_CHECK2 add constraint FKK_INTERNAL_TREE_STRUCT_356 foreign key (TREE_NODE_ID)
+      references USER_STAT.INTERNAL_TREE_STRUCT2 (INTERNAL_TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.STAT_REGION add constraint FKK_REGION_336 foreign key (REGION_ID)
+      references USER_LOCATION.REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_LOCATION.STAT_REGION add constraint FKK_STAT_REGION_327 foreign key (PARENT_REGION_ID)
+      references USER_LOCATION.STAT_REGION (REGION_ID) on delete restrict on update restrict;
+
+alter table USER_STAT.STA_TARGET_SYNTAX2 add constraint FKK_EXTERNAL_TREE_STRUCT_354 foreign key (EXTERNAL_TREE_NODE_ID)
+      references USER_STAT.EXTERNAL_TREE_STRUCT2 (EXTERNAL_TREE_NODE_ID) on delete restrict on update restrict;
+
+alter table USER_ACCT.SUB_BILLING_CYCLE add constraint FKK_BILLING_CYCLE_114 foreign key (BILLING_CYCLE_ID)
+      references USER_ACCT.BILLING_CYCLE (BILLING_CYCLE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_ACCT_ITEM_TYPE_117 foreign key (ACCT_ITEM_TYPE_ID)
+      references USER_ACCT.ACCT_ITEM_TYPE (ACCT_ITEM_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_ACTION_175 foreign key (ACTION_ID)
+      references USER_PRODUCT.ACTION (ACTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_PRICING_SECTION_18 foreign key (PRICING_SECTION_ID)
+      references USER_PRICING.PRICING_SECTION (PRICING_SECTION_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_PRODUCT_116 foreign key (SUB_PRODUCT_ID)
+      references USER_PRODUCT.PRODUCT (PRODUCT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_RATABLE_RESOURCE_17 foreign key (RESOURCE_ID)
+      references USER_PRICING.RATABLE_RESOURCE (RATABLE_RESOURCE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_REF_VALUE_39 foreign key (FIXED_RATE_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_REF_VALUE_40 foreign key (SCALED_RATE_VALUE_ID)
+      references USER_PRICING.REF_VALUE (REF_VALUE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_TARIFF_CALC_DESC_15 foreign key (CALC_METHOD_ID)
+      references USER_PRICING.TARIFF_CALC_DESC (TARIFF_CALC_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FKK_TARIFF_UNIT_16 foreign key (TARIFF_UNIT_ID)
+      references USER_PRICING.TARIFF_UNIT (TARIFF_UNIT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF add constraint FK_Reference_432 foreign key (INTEGRAL_TYPE_ID)
+      references USER_PRICING.INTEGRAL_TYPE (INTEGRAL_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.TARIFF_UNIT add constraint FKK_MEASURE_METHOD_41 foreign key (MEASURE_METHOD_ID)
+      references USER_PRICING.MEASURE_METHOD (MEASURE_METHOD_ID) on delete restrict on update restrict;
+
+alter table TIME_PERIOD_DEFINE add constraint FK_Reference_423 foreign key (TIME_PERIOD_ID)
+      references TIME_PERIOD (TIME_PERIOD_ID) on delete restrict on update restrict;
+
+alter table TRADE_RECORD add constraint FK_Reference_427 foreign key (TRADE_TYPE_ID)
+      references TRADE_TYPE (TRADE_TYPE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.ZONE add constraint FKK_PRICING_REF_OBJECT_54 foreign key (PRICING_REF_OBJECT_ID)
+      references USER_PRICING.PRICING_REF_OBJECT (PRICING_REF_OBJECT_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.ZONE_ITEM add constraint FKK_ZONE_33 foreign key (ZONE_ID)
+      references USER_PRICING.ZONE (ZONE_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.ZONE_ITEM add constraint FKK_ZONE_ITEM_32 foreign key (PARENT_ZONE_ITEM_ID)
+      references USER_PRICING.ZONE_ITEM (ZONE_ITEM_ID) on delete restrict on update restrict;
+
+alter table USER_PRICING.ZONE_ITEM_VALUE add constraint FK_Reference_375 foreign key (ZONE_ITEM_ID)
+      references USER_PRICING.ZONE_ITEM (ZONE_ITEM_ID) on delete restrict on update restrict;
 
